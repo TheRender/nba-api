@@ -9,6 +9,41 @@ module.exports = {
 
   attributes: {
 
+    name: {
+      type: 'string'
+    },
+
+    city: {
+      type: 'string'
+    },
+
+    // ID specific from the NBA API
+    teamID: {
+      type: 'string'
+    },
+
+    players: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    logo: {
+      type: 'url'
+    },
+
+    seasonWins: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    seasonLosses: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    location: {
+      type: 'string'
+    }
+
   }
 };
-
