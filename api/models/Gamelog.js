@@ -27,71 +27,71 @@ module.exports = {
     },
 
     minutes: {
-      type: 'integer'
+      type: 'float'
     },
 
     points: {
-      type: 'integer'
+      type: 'float'
     },
 
     rebounds: {
-      type: 'integer'
+      type: 'float'
     },
 
     assists: {
-      type: 'integer'
+      type: 'float'
     },
 
     steals: {
-      type: 'integer'
+      type: 'float'
     },
 
     blocks: {
-      type: 'integer'
+      type: 'float'
     },
 
     fieldGoalsMade: {
-      type: 'integer'
+      type: 'float'
     },
 
     fieldGoalsAttempted: {
-      type: 'integer'
+      type: 'float'
     },
 
     fieldGoalPercentage: {
-      type: 'integer'
+      type: 'float'
     },
 
     threePointsMade: {
-      type: 'integer'
+      type: 'float'
     },
 
     threePointsAttempted: {
-      type: 'integer'
+      type: 'float'
     },
 
     threePointsPercentage: {
-      type: 'integer'
+      type: 'float'
     },
 
     freeThrowsMade: {
-      type: 'integer'
+      type: 'float'
     },
 
     freeThrowsAttempted: {
-      type: 'integer'
+      type: 'float'
     },
 
     freeThrowsPercentage: {
-      type: 'integer'
+      type: 'float'
     },
 
     fouls: {
-      type: 'integer'
+      type: 'float'
     },
 
     plusMinus: {
-      type: 'integer'
+      type: 'float'
     },
 
   }

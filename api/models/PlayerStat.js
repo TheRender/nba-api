@@ -22,39 +22,39 @@ module.exports = {
     },
 
     ppg: {
-      type: 'integer'
+      type: 'float'
     },
 
     rpg: {
-      type: 'integer'
+      type: 'float'
     },
 
     apg: {
-      type: 'integer'
+      type: 'float'
     },
 
     spg: {
-      type: 'integer'
+      type: 'float'
     },
 
     bpg: {
-      type: 'integer'
+      type: 'float'
     },
 
     topg: {
-      type: 'integer'
+      type: 'float'
     },
 
     fieldGoalPercentage: {
-      type: 'integer'
+      type: 'float'
     },
 
     threePointPercentage: {
-      type: 'integer'
+      type: 'float'
     },
 
     freeThrowPercentage: {
-      type: 'integer'
+      type: 'float'
     }
 
   }

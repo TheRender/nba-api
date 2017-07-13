@@ -32,7 +32,7 @@ module.exports = {
     },
 
     jerseyNumber: {
-      type: 'integer'
+      type: 'float'
     },
 
     position: {
@@ -40,15 +40,15 @@ module.exports = {
     },
 
     careerPPG: {
-      type: 'integer'
+      type: 'float'
     },
 
     careerRPG: {
-      type: 'integer'
+      type: 'float'
     },
 
     careerAPG: {
-      type: 'integer'
+      type: 'float'
     },
 
     // Array of stat ID's
