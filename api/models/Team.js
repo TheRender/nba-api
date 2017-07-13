@@ -43,6 +43,11 @@ module.exports = {
 
     location: {
       type: 'string'
+    },
+
+    logs: {
+      type: 'array',
+      defaultsTo: []
     }
 
   }
