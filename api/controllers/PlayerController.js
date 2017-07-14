@@ -141,4 +141,94 @@ module.exports = {
     });
   },
 
+  /**
+   * @type :: REST
+   * @route :: /player/delete
+   * @crud :: DELETE
+   * @description :: Delete the data about a given player
+   * @param :: Post object wih the playerID: `{playerID: 12345}`
+   * @sample :: `{success: true}`
+   * @sample :: `500`
+   */
+  delete: function(req, res) {
+    var post = req.body;
+    var player;
+    var team;
+    async.series([
+      function(callback) {
+        Player.findOne({
+          id: post.playerID
+        }).exec(function(err, play) {
+          if (err || play == undefined) {
+            console.log("There was an error finding the player.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            player = play;
+          }
+        });
+      },
+      function(callback) {
+        Team.findOne({
+          id: player.teamID
+        }).exec(function(err, teamName) {
+          if (err || teamName == undefined) {
+            console.log("There was an error finding the team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            team = teamName;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        // Remove the player id from the team
+        var index = team.players.indexOf(player.id);
+        if (index > -1) {
+          team.players.splice(index, 1);
+        }
+        team.save(function(callback) {
+          if (err) {
+            console.log("There was an error saving the team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        PlayerStat.destroy({
+          id: player.stats
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error destroying the player stats.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        Player.destroy({
+          id: player.id
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error destroying the player.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      }
+    ], function(callback) {
+      res.send({
+        success: true
+      });
+    });
+  },
+
 };
