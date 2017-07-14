@@ -115,6 +115,58 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /player/:playerID
+   * @crud :: get
+   * @description :: Retrieves the player, the objects of all of the player,
+   * and all other general information
+   * @param :: playerID - the ID of the player to look up
+   * @sample :: `{player: object}`
+   * @sample :: `500`
+   */
+  get: function(req, res) {
+    req.validate({
+      playerID: 'string'
+    });
+
+    var player;
+    async.series([
+      function(callback) {
+        Player.findOne({
+          id: req.param('playerID')
+        }).exec(function(err, playerName) {
+          if (err || playerName == undefined) {
+            console.log("There was an error finding the player.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            player = playerName;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        PlayerStat.find({
+          id: player.stats
+        }).exec(function(err, stats) {
+          if (err || stats == undefined) {
+            console.log("There was an error finding the player stats.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            player.stats = stats;
+            callback();
+          }
+        });
+      },
+    ], function(callback) {
+      res.send({
+        player: player
+      });
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /player/edit
    * @crud :: post
    * @description :: Edit the given players's information.  Only edits the data
