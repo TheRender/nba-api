@@ -32,13 +32,12 @@ module.exports = {
     },
 
     seasonWins: {
-      type: 'array',
+      type: 'integer',
       defaultsTo: []
     },
 
     seasonLosses: {
-      type: 'array',
-      defaultsTo: []
+      type: 'integer',
     },
 
     location: {
