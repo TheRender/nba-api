@@ -57,27 +57,104 @@ describe("Player Controller", function() {
         }
       });
     });
-    // it("should have added the player id to the team", function(done) {
-    //   Team.findOne({
-    //     teamID: "12345"
-    //   }).exec(function(err, t) {
-    //     if (err || t == undefined) {
-    //       done(err);
-    //     } else {
-    //       Player.findOne({
-    //         playerID: "67890"
-    //       }).exec(function(err, player) {
-    //         if (err || player == undefined) {
-    //           done(err);
-    //         } else {
-    //           console.log(t.players);
-    //           console.log(player.id);
-    //           assert.include(t.players, player.id);
-    //           done();
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
+    it("should have added the player id to the team", function(done) {
+      Team.findOne({
+        teamID: "12345"
+      }).exec(function(err, t) {
+        if (err || t == undefined) {
+          done(err);
+        } else {
+          Player.findOne({
+            playerID: "67890"
+          }).exec(function(err, player) {
+            if (err || player == undefined) {
+              done(err);
+            } else {
+              console.log(t.players);
+              console.log(player.id);
+              assert.include(t.players, player.id);
+              done();
+            }
+          });
+        }
+      });
+    });
+  });
+  describe("edit", function() {
+    it("should edit a player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .post('/player/edit')
+            .send({
+              id: player.id,
+              jerseyNumber: 1
+            })
+            .expect(200, done)
+        }
+      });
+    });
+    it("should have changed the number", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          assert.equal(player.jerseyNumber, 1);
+          done();
+        }
+      });
+    });
+  });
+  var pl;
+  describe("delete", function() {
+    it("should delete the player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          pl = player;
+          console.log(player);
+          agent
+            .delete('/player/delete')
+            .send({
+              playerID: player.id
+            })
+            .expect(200, done)
+        }
+      });
+    });
+    it("should remove the player id from the team", function(done) {
+      Team.findOne({
+        id: pl.teamID
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          var index = team.players.indexOf(pl.id);
+          assert.equal(index, -1);
+          done();
+        }
+      });
+    });
+    it("the player should not be found", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err) {
+          done(err);
+        } else {
+          assert.equal(undefined, player);
+          done();
+        }
+      });
+    });
   });
 });

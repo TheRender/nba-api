@@ -217,6 +217,7 @@ module.exports = {
             res.serverError();
           } else {
             player = play;
+            callback();
           }
         });
       },
@@ -227,6 +228,7 @@ module.exports = {
           if (err || teamName == undefined) {
             console.log("There was an error finding the team.");
             console.log("Error = " + err);
+            console.log(player.teamID);
             res.serverError();
           } else {
             team = teamName;
@@ -240,7 +242,7 @@ module.exports = {
         if (index > -1) {
           team.players.splice(index, 1);
         }
-        team.save(function(callback) {
+        team.save(function(err) {
           if (err) {
             console.log("There was an error saving the team.");
             console.log("Error = " + err);
