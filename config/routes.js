@@ -37,11 +37,6 @@ module.exports.routes = {
     action: 'new'
   },
 
-  'GET /team/:teamID': {
-    controller: 'team',
-    action: 'get'
-  },
-
   'POST /team/edit': {
     controller: 'team',
     action: 'edit'
@@ -50,6 +45,11 @@ module.exports.routes = {
   'DELETE /team/delete': {
     controller: 'team',
     action: 'delete'
+  },
+
+  'GET /team/:teamID': {
+    controller: 'team',
+    action: 'get'
   },
 
   'POST /player/new': {

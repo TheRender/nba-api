@@ -174,8 +174,10 @@ module.exports = {
    */
   edit: function(req, res) {
     var post = req.body;
+    var tempID = post.id;
+    delete post.id;
     Team.update({
-      id: post.id
+      id: tempID
     }, post).exec(function(err) {
       if (err) {
         console.log("There was an error updating the team.");
@@ -213,11 +215,12 @@ module.exports = {
             res.serverError();
           } else {
             team = teamName;
+            callback();
           }
         });
       },
       function(callback) {
-        Gamelog.delete({
+        Gamelog.destroy({
           id: team.logs
         }).exec(function(err) {
           if (err) {
