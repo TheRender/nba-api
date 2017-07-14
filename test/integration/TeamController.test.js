@@ -123,17 +123,5 @@ describe("Team Controller", function() {
         }
       });
     });
-    it("should be unable to find a team", function(done) {
-      Team.findOne({
-        teamID: "12345"
-      }).exec(function(err, team) {
-        if (err) {
-          done(err);
-        } else {
-          assert.equal(undefined, team);
-          done();
-        }
-      });
-    });
   });
 });
