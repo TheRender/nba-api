@@ -13,7 +13,8 @@ module.exports = {
    * @route :: /team/new
    * @crud :: post
    * @param :: Data sent as a post object should include:
-   * `name, city, teamID, players, logo, seasonWins, seasonLosses, location, logs`
+   * `name, city, teamID, logo, seasonWins, seasonLosses, location`
+   * @note :: Both players and logs will be initialzed empty
    * @sample :: `{ success: true, team: object }`
    * @sample :: `{ error: true, message: "Team already exists"}`
    * @sample :: `500`
@@ -46,12 +47,12 @@ module.exports = {
           name: post.name,
           city: post.city,
           teamID: post.teamID,
-          players: post.players,
+          players: [],
           logo: post.logo,
           seasonWins: post.seasonWins,
           seasonLosses: post.seasonLosses,
           location: post.location,
-          logs: post.logs,
+          logs: [],
         };
 
         Team.create(obj).exec(function(err, team) {
@@ -167,7 +168,7 @@ module.exports = {
    * @crud :: post
    * @description :: Edit the given team's information.  Only edits the data given
    * @param :: Post object with an object representation of the data that has to
-   * be changed.
+   * be changed. **Must contain the team ID**
    * @sample :: `{success: true}`
    * @sample :: `500`
    */
