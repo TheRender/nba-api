@@ -204,7 +204,7 @@ module.exports = {
         },
         function(callback) {
           PlayerStat.destroy({
-            id: p.id
+            id: player.id
           }).exec(function(err) {
             if (err) {
               console.log("There was an error deleting the playerstat.");
