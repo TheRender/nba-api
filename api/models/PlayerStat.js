@@ -9,6 +9,10 @@ module.exports = {
 
   attributes: {
 
+    playerID: {
+      type: 'string',
+    },
+
     season: {
       type: 'string'
     },
