@@ -92,6 +92,26 @@ module.exports.routes = {
     action: 'get'
   },
 
+  'POST /playerstat/new': {
+    controller: 'playerstat',
+    action: 'new'
+  },
+
+  'POST /playerstat/edit': {
+    controller: 'playerstat',
+    action: 'edit'
+  },
+
+  'DELETE /playerstat/delete': {
+    controller: 'playerstat',
+    action: 'delete'
+  },
+
+  'GET /playerstat/:statID': {
+    controller: 'playerstat',
+    action: 'get'
+  },
+
 
   /***************************************************************************
    *                                                                          *
