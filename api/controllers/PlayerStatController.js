@@ -20,7 +20,7 @@ module.exports = {
    * @sample :: `{ success: true, log: object}`
    * @sample :: `500`
    */
-  new: function(res, req) {
+  new: function(req, res) {
     var post = req.body;
     var player;
     var playerstat;
@@ -98,7 +98,7 @@ module.exports = {
    * @sample :: `{log: object}`
    * @sample :: `500`
    */
-  get: function(res, req) {
+  get: function(req, res) {
     req.validate({
       statID: 'string'
     });
@@ -128,7 +128,7 @@ module.exports = {
    * @sample :: `{success: true}`
    * @sample :: `500`
    */
-  edit: function(res, req) {
+  edit: function(req, res) {
     var post = req.body;
     PlayerStat.update({
       id: post.id
@@ -154,7 +154,7 @@ module.exports = {
    * @sample :: `{success: true}`
    * @sample :: `500`
    */
-  delete: function(res, req) {
+  delete: function(req, res) {
     var post = req.body;
     var playerstat;
     var player;
