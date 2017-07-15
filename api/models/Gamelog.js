@@ -9,8 +9,11 @@ module.exports = {
 
   attributes: {
 
-
     date: {
+      type: 'string'
+    },
+
+    location: {
       type: 'string'
     },
 
@@ -19,6 +22,10 @@ module.exports = {
     },
 
     gameOpponent: {
+      type: 'string'
+    },
+
+    opponentTeamID: {
       type: 'string'
     },
 
