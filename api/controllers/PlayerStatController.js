@@ -131,7 +131,7 @@ module.exports = {
   edit: function(res, req) {
     var post = req.body;
     PlayerStat.update({
-      id: post.id;
+      id: post.id
     }, post).exec(function(err) {
       if (err) {
         console.log("There was an error updating the playerstat.");
@@ -159,67 +159,66 @@ module.exports = {
     var playerstat;
     var player;
     async.series([
-        function(callback) {
-          PlayerStat.findOne({
-            id: post.statID
-          }).exec(function(err, s) {
-            if (err || s == undefined) {
-              console.log("There was an error finding the player stat.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              playerstat = s;
-              callback();
-            }
-          });
-        },
-        function(callback) {
-          Player.findOne({
-            id: playerstat.playerID
-          }).exec(function(err, p) {
-            if (err || p == undefined) {
-              console.log("There was an error finding the player.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              player = p;
-              callback();
-            }
-          });
-        },
-        function(callback) {
-          var index = player.stats.indexOf(p.id);
-          if (index > -1) {
-            player.stats.splice(index, 1);
-          }
-          player.save(function(err) {
-            if (err) {
-              console.log("There was an error saving the player after removing the stats.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              callback();
-            }
-          });
-        },
-        function(callback) {
-          PlayerStat.destroy({
-            id: player.id
-          }).exec(function(err) {
-            if (err) {
-              console.log("There was an error deleting the playerstat.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              callback();
-            }
-          });
-        }
-      ],
       function(callback) {
-        res.send({
-          success: true;
+        PlayerStat.findOne({
+          id: post.statID
+        }).exec(function(err, s) {
+          if (err || s == undefined) {
+            console.log("There was an error finding the player stat.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            playerstat = s;
+            callback();
+          }
         });
+      },
+      function(callback) {
+        Player.findOne({
+          id: playerstat.playerID
+        }).exec(function(err, p) {
+          if (err || p == undefined) {
+            console.log("There was an error finding the player.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            player = p;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        var index = player.stats.indexOf(p.id);
+        if (index > -1) {
+          player.stats.splice(index, 1);
+        }
+        player.save(function(err) {
+          if (err) {
+            console.log("There was an error saving the player after removing the stats.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        PlayerStat.destroy({
+          id: player.id
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error deleting the playerstat.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      }
+    ], function(callback) {
+      res.send({
+        success: true
       });
+    });
   },
 };
