@@ -70,7 +70,28 @@ module.exports.routes = {
   'DELETE /player/delete': {
     controller: 'player',
     action: 'delete'
-  }
+  },
+
+  'POST /gamelog/new': {
+    controller: 'gamelog',
+    action: 'new'
+  },
+
+  'POST /gamelog/edit': {
+    controller: 'gamelog',
+    action: 'edit'
+  },
+
+  'DELETE /gamelog/delete': {
+    controller: 'gamelog',
+    action: 'delete'
+  },
+
+  'GET /gamelog/:logID': {
+    controller: 'gamelog',
+    action: 'get'
+  },
+
 
   /***************************************************************************
    *                                                                          *

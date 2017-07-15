@@ -8,7 +8,7 @@ describe("Player Controller", function() {
   before(function(done) {
     agent = request.agent(sails.hooks.http.app);
     var obj = {
-      name: "John Smith",
+      name: "The Bulls",
       city: "Chicago",
       teamID: "12345",
       logo: "http://google.com",
@@ -18,9 +18,20 @@ describe("Player Controller", function() {
       players: [],
       logs: []
     };
-    Team.create(obj).exec(function(err, te) {
-      if (err || te == undefined) {
+    Team.findOne({
+      teamID: "12345"
+    }).exec(function(err, te) {
+      if (err) {
         done(err);
+      } else if (te == undefined) {
+        Team.create(obj).exec(function(err, t) {
+          if (err || t == undefined) {
+            done(err);
+          } else {
+            team = t;
+            done();
+          }
+        });
       } else {
         team = te;
         done();
@@ -70,12 +81,31 @@ describe("Player Controller", function() {
             if (err || player == undefined) {
               done(err);
             } else {
-              console.log(t.players);
-              console.log(player.id);
               assert.include(t.players, player.id);
               done();
             }
           });
+        }
+      });
+    });
+  });
+  describe("get", function() {
+    it("should get a player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/player/' + player.id)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body.player;
+              assert.equal(post.name, "John Smith");
+              done();
+            });
         }
       });
     });
@@ -121,7 +151,6 @@ describe("Player Controller", function() {
           done(err);
         } else {
           pl = player;
-          console.log(player);
           agent
             .delete('/player/delete')
             .send({
