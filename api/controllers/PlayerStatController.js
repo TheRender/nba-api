@@ -169,6 +169,7 @@ module.exports = {
             res.serverError();
           } else {
             playerstat = s;
+            console.log("stat" + playerstat);
             callback();
           }
         });
@@ -188,7 +189,7 @@ module.exports = {
         });
       },
       function(callback) {
-        var index = player.stats.indexOf(p.id);
+        var index = player.stats.indexOf(playerstat.id);
         if (index > -1) {
           player.stats.splice(index, 1);
         }
@@ -204,7 +205,7 @@ module.exports = {
       },
       function(callback) {
         PlayerStat.destroy({
-          id: player.id
+          id: playerstat.id
         }).exec(function(err) {
           if (err) {
             console.log("There was an error deleting the playerstat.");

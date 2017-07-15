@@ -9,7 +9,7 @@ describe("PlayerStat Controller", function() {
     agent = request.agent(sails.hooks.http.app);
     var obj = {
       name: "Russell Westbrook",
-      playerID: "12345",
+      playerID: "67890",
       headshotURL: "https://google.com",
       teamName: "OKC Thunder",
       teamID: "12345",
@@ -21,7 +21,7 @@ describe("PlayerStat Controller", function() {
       stats: []
     };
     Player.findOne({
-      playerID: "12345"
+      playerID: "67890"
     }).exec(function(err, pl) {
       if (err) {
         done(err);
@@ -43,7 +43,7 @@ describe("PlayerStat Controller", function() {
   describe("new", function() {
     it("should create a new player stat", function(done) {
       var obj = {
-        playerID: "12345",
+        playerID: player.id,
         season: "2016-17",
         gamesPlayed: "82",
         minutes: "36",
@@ -64,8 +64,8 @@ describe("PlayerStat Controller", function() {
     });
   });
   it("should create a player stat", function(done) {
-    Player.findOne({
-      playerID: "12345"
+    PlayerStat.findOne({
+      playerID: player.id
     }).exec(function(err, playerstat) {
       if (err || playerstat == undefined) {
         done(err);
@@ -75,19 +75,19 @@ describe("PlayerStat Controller", function() {
     });
   });
   it("should have added the player stat to the player", function(done) {
-    PlayerStat.findOne({
-      playerID: "12345"
+    Player.findOne({
+      playerID: "67890"
     }).exec(function(err, player) {
       if (err || player == undefined) {
         done(err);
       } else {
         PlayerStat.findOne({
-          playerID: "12345"
+          playerID: player.id
         }).exec(function(err, playerstat) {
           if (err || playerstat == undefined) {
             done(err);
           } else {
-            assert.include(player.stats, playerstat.id);
+            assert.include(player.stats, palyerstat.id);
             done();
           }
         });
@@ -97,7 +97,7 @@ describe("PlayerStat Controller", function() {
   describe("get", function() {
     it("should get a player stat", function(done) {
       PlayerStat.findOne({
-        playerID: "12345"
+        playerID: player.id
       }).exec(function(err, playerstat) {
         if (err || playerstat == undefined) {
           done(err);
@@ -107,8 +107,8 @@ describe("PlayerStat Controller", function() {
             .set('Accept', 'application/json')
             .end(function(err, res) {
               if (err) done(err);
-              var post = res.body.stats;
-              assert.equal(post.playerID, "12345");
+              var post = res.body.stat;
+              assert.equal(post.season, "2016-17");
               done();
             });
         }
@@ -118,7 +118,7 @@ describe("PlayerStat Controller", function() {
   describe("edit", function() {
     it("should edit a player stat", function(done) {
       PlayerStat.findOne({
-        playerID: "12345"
+        playerID: player.id
       }).exec(function(err, stat) {
         if (err || stat == undefined) {
           done(err);
@@ -126,6 +126,7 @@ describe("PlayerStat Controller", function() {
           agent
             .post('/playerstat/edit')
             .send({
+              id: stat.id,
               ppg: 25,
               rpg: 5
             })
@@ -135,7 +136,7 @@ describe("PlayerStat Controller", function() {
     });
     it("should have changed the player stat", function(done) {
       PlayerStat.findOne({
-        playerID: "12345"
+        playerID: player.id
       }).exec(function(err, stat) {
         if (err || stat == undefined) {
           done(err);
@@ -148,8 +149,8 @@ describe("PlayerStat Controller", function() {
   });
   describe("delete", function() {
     it("should delete the player stat", function(done) {
-      PlayerStat.find({
-        playerID: "12345"
+      PlayerStat.findOne({
+        playerID: player.id
       }).exec(function(err, stat) {
         if (err || stat == undefined) {
           done(err);
@@ -157,19 +158,20 @@ describe("PlayerStat Controller", function() {
           agent
             .delete('/playerstat/delete')
             .send({
-              statID: stat.id,
+              statID: stat.id
             })
             .expect(200, done)
         }
       })
     });
     it("should remove the player stat from the player", function(done) {
-      Player.find({
-        playerID: "12345"
+      Player.findOne({
+        playerID: "67890"
       }).exec(function(err, player) {
         if (err || player == undefined) {
           done(err);
         } else {
+          console.log(player);
           assert.equal(player.stats.length, 0);
           done();
         }
@@ -177,7 +179,7 @@ describe("PlayerStat Controller", function() {
     });
     it("should have deleted the player stat record", function(done) {
       PlayerStat.findOne({
-        playerID: "12345"
+        playerID: player.id
       }).exec(function(err, stat) {
         if (err) {
           done(err);
