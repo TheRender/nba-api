@@ -1,7 +1,7 @@
 /**
  * @type :: CLASS
  * @class :: PlayerStatController
- * @author :: David Sa
+ * @author :: David Sa and Steven Hanna
  * @description :: Controller logic for Player Stats.
  * @see :: /models/PlayerStat.js
  * @parent :: /models/Player.js
