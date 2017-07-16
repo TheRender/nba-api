@@ -79,6 +79,11 @@ module.exports.connections = {
     database: 'render-test'
   },
 
+  production: {
+    adapter: 'sails-mongo',
+    url: process.env.MONGODB_URI
+  }
+
   /***************************************************************************
    *                                                                          *
    * PostgreSQL is another officially supported relational database.          *
