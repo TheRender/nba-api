@@ -3,3 +3,8 @@ general:
     only:
      - master # list of branches to build
      - production
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: foo-bar-123
