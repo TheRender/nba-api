@@ -36,6 +36,19 @@ describe("Team Controller", function() {
         });
     });
   });
+  describe("getAll", function() {
+    it("should get all the teams", function(done) {
+      agent
+        .get('/teams')
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          if (err) done(err);
+          var post = res.body;
+          console.log(post);
+          done();
+        });
+    });
+  });
   describe("get", function() {
     it("should get a team", function(done) {
       Team.findOne({

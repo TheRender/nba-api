@@ -32,6 +32,11 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
+  'GET /teams': {
+    controller: 'team',
+    action: 'getAll'
+  },
+
   'POST /team/new': {
     controller: 'team',
     action: 'new'

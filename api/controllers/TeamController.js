@@ -73,6 +73,49 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /teams
+   * @crud :: get
+   * @description :: Retrieves all of the teams, and all of their respective
+   * players
+   * @sample :: `{teams: [teamObj]}`
+   * @sample :: `500`
+   */
+  getAll: function(req, res) {
+    var teams;
+    async.series([
+      function(callback) {
+        Team.find().exec(function(err, teamNames) {
+          if (err || teamNames == undefined) {
+            console.log("There was an error finding the teams.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            teams = teamNames;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        async.map(teams, TeamService.fetchTeamWithObj, function(err, results) {
+          if (err || results == undefined) {
+            console.log("There was an error performing the map.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            teams = results;
+            callback();
+          }
+        });
+      },
+    ], function(callback) {
+      res.send({
+        teams: teams
+      });
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /team/:teamID
    * @crud :: get
    * @description :: Retrieves the team, the objects of all of the teams players,
@@ -85,72 +128,16 @@ module.exports = {
     req.validate({
       teamID: 'string'
     });
-
     var team;
     async.series([
       function(callback) {
-        Team.findOne({
-          id: req.param('teamID')
-        }).exec(function(err, t) {
-          if (err || t == undefined) {
-            console.log("There was an error finding the team.");
-            console.log("Error = " + err);
-            res.serverError();
-          } else {
-            team = t;
-            callback();
-          }
-        });
-      },
-      function(callback) {
-        Player.find({
-          id: team.players
-        }).exec(function(err, players) {
-          if (err || players == undefined) {
-            console.log("There was an error finding the players.");
-            console.log("Error = " + err);
-            res.serverError();
-          } else {
-            team.players = players;
-            callback();
-          }
-        });
-      },
-      function(callback) {
-        async.map(team.players, function(player, cb) {
-          PlayerStat.find({
-            id: player.stats
-          }).exec(function(err, stats) {
-            if (err || stats == undefined) {
-              console.log("There was an error finding the stats.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              player.stats = stats;
-              cb(undefined, player);
-            }
-          })
-        }, function(err, results) {
+        TeamService.fetchTeamWithID(req.param('teamID'), function(err, results) {
           if (err || results == undefined) {
-            console.log("There was an error getting the player stats.");
+            console.log("There was an error getting the team.");
             console.log("Error = " + err);
             res.serverError();
           } else {
-            team.players = results;
-            callback();
-          }
-        });
-      },
-      function(callback) {
-        Gamelog.find({
-          id: team.log
-        }).exec(function(err, logs) {
-          if (err || logs == undefined) {
-            console.log("There was an error finding the game logs.");
-            console.log("Error = " + err);
-            res.serverError();
-          } else {
-            team.logs = logs;
+            team = results;
             callback();
           }
         });
