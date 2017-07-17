@@ -73,6 +73,49 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /teams
+   * @crud :: get
+   * @description :: Retrieves all of the teams, and all of their respective
+   * players
+   * @sample :: `{teams: [teamObj]}`
+   * @sample :: `500`
+   */
+  getAll: function(req, res) {
+    var teams;
+    async.series([
+      function(callback) {
+        Team.find().exec(function(err, teamNames) {
+          if (err || teamNames == undefined) {
+            console.log("There was an error finding the teams.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            teams = teamNames;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        async.map(teams, TeamService.fetchTeamWithObj, function(err, results) {
+          if (err || results == undefined) {
+            console.log("There was an error performing the map.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            teams = results;
+            callback();
+          }
+        });
+      },
+    ], function(callback) {
+      res.send({
+        teams: teams
+      });
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /team/:teamID
    * @crud :: get
    * @description :: Retrieves the team, the objects of all of the teams players,
@@ -117,20 +160,7 @@ module.exports = {
         });
       },
       function(callback) {
-        async.map(team.players, function(player, cb) {
-          PlayerStat.find({
-            id: player.stats
-          }).exec(function(err, stats) {
-            if (err || stats == undefined) {
-              console.log("There was an error finding the stats.");
-              console.log("Error = " + err);
-              res.serverError();
-            } else {
-              player.stats = stats;
-              cb(undefined, player);
-            }
-          })
-        }, function(err, results) {
+        async.map(team.players, PlayerService.getPlayerStats, function(err, results) {
           if (err || results == undefined) {
             console.log("There was an error getting the player stats.");
             console.log("Error = " + err);
@@ -143,7 +173,7 @@ module.exports = {
       },
       function(callback) {
         Gamelog.find({
-          id: team.log
+          id: team.logs
         }).exec(function(err, logs) {
           if (err || logs == undefined) {
             console.log("There was an error finding the game logs.");
