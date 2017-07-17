@@ -131,33 +131,17 @@ module.exports = {
     var player;
     async.series([
       function(callback) {
-        Player.findOne({
-          id: req.param('playerID')
-        }).exec(function(err, playerName) {
-          if (err || playerName == undefined) {
+        PlayerService.fetchPlayerWithID(req.param('playerID'), function(err, results) {
+          if (err || results == undefined) {
             console.log("There was an error finding the player.");
             console.log("Error = " + err);
             res.serverError();
           } else {
-            player = playerName;
+            player = results;
             callback();
           }
         });
-      },
-      function(callback) {
-        PlayerStat.find({
-          id: player.stats
-        }).exec(function(err, stats) {
-          if (err || stats == undefined) {
-            console.log("There was an error finding the player stats.");
-            console.log("Error = " + err);
-            res.serverError();
-          } else {
-            player.stats = stats;
-            callback();
-          }
-        });
-      },
+      }
     ], function(callback) {
       res.send({
         player: player
