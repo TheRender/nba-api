@@ -115,6 +115,48 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /players
+   * @crud :: get
+   * @description :: Retrieves all of the players
+   * @sample :: `{players: [player]}`
+   * @sample :: `500`
+   */
+  getAll: function(req, res) {
+    var players;
+    async.series([
+      function(callback) {
+        Player.find().exec(function(err, playerNames) {
+          if (err || playerNames == undefined) {
+            console.log("There was an error finding the players.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            players = playerNames;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        async.map(players, PlayerService.fetchPlayerWithObj, function(err, result) {
+          if (err || result == undefined) {
+            console.log("There was an error fetching the players.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            players = result;
+            callback();
+          }
+        });
+      },
+    ], function(callback) {
+      res.send({
+        players: players
+      });
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /player/:playerID
    * @crud :: get
    * @description :: Retrieves the player, the objects of all of the player,
