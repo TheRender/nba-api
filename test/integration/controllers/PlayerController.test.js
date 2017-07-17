@@ -89,6 +89,14 @@ describe("Player Controller", function() {
       });
     });
   });
+  describe("getAll", function() {
+    it("should get all the players", function(done) {
+      agent
+        .get('/players')
+        .set('Accept', 'application/json')
+        .expect(200, done)
+    });
+  });
   describe("get", function() {
     it("should get a player", function(done) {
       Player.findOne({

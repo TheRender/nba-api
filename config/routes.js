@@ -52,6 +52,11 @@ module.exports.routes = {
     action: 'delete'
   },
 
+  'GET /players': {
+    controller: 'player',
+    action: 'getAll'
+  },
+
   'GET /team/:teamID': {
     controller: 'team',
     action: 'get'
