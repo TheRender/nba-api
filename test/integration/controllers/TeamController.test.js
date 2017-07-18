@@ -128,7 +128,7 @@ describe("Team Controller", function() {
           done(err);
         } else {
           agent
-            .post('/team/delete')
+            .delete('/team/delete')
             .send({
               teamID: team.id
             })
