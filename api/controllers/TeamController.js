@@ -73,6 +73,72 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /team/exists/id/:teamID
+   * @crud :: get
+   * @description :: Determines if a team exists
+   * @sample :: `{exists: false}`
+   * @sample :: `{exists: true}`
+   * @sample :: `500`
+   */
+  existsID: function(req, res) {
+    req.validate({
+      teamID: 'string'
+    });
+    Team.findOne({
+      id: req.param('teamID')
+    }).exec(function(err, team) {
+      if (err) {
+        console.log("There was an error finding the team.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else if (team == undefined) {
+        res.send({
+          exists: false
+        });
+      } else {
+        res.send({
+          exists: true
+        });
+      }
+    });
+  },
+
+  /**
+   * @type :: REST
+   * @route :: /team/exists/nbaid/:teamID
+   * @crud :: get
+   * @description :: Determines if a team exists using the nba id.
+   * If it does exist, it provides the normal ID
+   * @sample :: `{exists: false}`
+   * @sample :: `{exists: true, id: string}`
+   * @sample :: `500`
+   */
+  existsNBAID: function(req, res) {
+    req.validate({
+      teamID: 'string'
+    });
+    Team.findOne({
+      teamID: req.param('teamID')
+    }).exec(function(err, team) {
+      if (err) {
+        console.log("There was an error finding the team.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else if (team == undefined) {
+        res.send({
+          exists: false
+        });
+      } else {
+        res.send({
+          exists: true,
+          id: team.id
+        });
+      }
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /teams
    * @crud :: get
    * @description :: Retrieves all of the teams, and all of their respective

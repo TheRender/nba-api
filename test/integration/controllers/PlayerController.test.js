@@ -89,6 +89,66 @@ describe("Player Controller", function() {
       });
     });
   });
+  describe("exists", function() {
+    it("should test existance", function(done) {
+      Player.findOne({
+        teamID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/player/exists/nbaid/67890')
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, true);
+              assert.equal(post.id, player.id)
+              done();
+            });
+        }
+      });
+    });
+    it("should test existance", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/player/exists/id/' + player.id)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, true);
+              done();
+            });
+        }
+      });
+    });
+    it("should fail existance", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/player/exists/nbaid/12345123')
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, false);
+              done();
+            });
+        }
+      });
+    });
+  });
   describe("getAll", function() {
     it("should get all the players", function(done) {
       agent

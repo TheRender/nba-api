@@ -71,6 +71,66 @@ describe("Team Controller", function() {
       });
     });
   });
+  describe("exists", function() {
+    it("should test existance", function(done) {
+      Team.findOne({
+        teamID: "12345"
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/team/exists/nbaid/12345')
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, true);
+              assert.equal(post.id, team.id)
+              done();
+            });
+        }
+      });
+    });
+    it("should test existance", function(done) {
+      Team.findOne({
+        teamID: "12345"
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/team/exists/id/' + team.id)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, true);
+              done();
+            });
+        }
+      });
+    });
+    it("should fail existance", function(done) {
+      Team.findOne({
+        teamID: "12345"
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/team/exists/nbaid/12345123')
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body;
+              assert.equal(post.exists, false);
+              done();
+            });
+        }
+      });
+    });
+  });
   describe("edit", function() {
     it("should edit a team", function(done) {
       Team.findOne({

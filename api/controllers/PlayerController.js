@@ -157,6 +157,72 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /player/exists/id/:playerID
+   * @crud :: get
+   * @description :: Determines if a player exists
+   * @sample :: `{exists: false}`
+   * @sample :: `{exists: true}`
+   * @sample :: `500`
+   */
+  existsID: function(req, res) {
+    req.validate({
+      playerID: 'string'
+    });
+    Player.findOne({
+      id: req.param('playerID')
+    }).exec(function(err, player) {
+      if (err) {
+        console.log("There was an error finding the player.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else if (player == undefined) {
+        res.send({
+          exists: false
+        });
+      } else {
+        res.send({
+          exists: true
+        });
+      }
+    });
+  },
+
+  /**
+   * @type :: REST
+   * @route :: /player/exists/nbaid/:playerID
+   * @crud :: get
+   * @description :: Determines if a player exists.
+   * If it does exist, sends the regular ID back also
+   * @sample :: `{exists: false}`
+   * @sample :: `{exists: true, id: string}`
+   * @sample :: `500`
+   */
+  existsNBAID: function(req, res) {
+    req.validate({
+      playerID: 'string'
+    });
+    Player.findOne({
+      playerID: req.param('playerID')
+    }).exec(function(err, player) {
+      if (err) {
+        console.log("There was an error finding the player.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else if (player == undefined) {
+        res.send({
+          exists: false
+        });
+      } else {
+        res.send({
+          exists: true,
+          id: player.id
+        });
+      }
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /player/:playerID
    * @crud :: get
    * @description :: Retrieves the player, the objects of all of the player,
