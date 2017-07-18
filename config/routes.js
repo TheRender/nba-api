@@ -57,6 +57,26 @@ module.exports.routes = {
     action: 'getAll'
   },
 
+  'GET /player/exists/id/:playerID': {
+    controller: 'player',
+    action: 'existsID'
+  },
+
+  'GET /player/exists/nbaid/:playerID': {
+    controller: 'player',
+    action: 'existsNBAID'
+  },
+
+  'GET /team/exists/id/:teamID': {
+    controller: 'team',
+    action: 'existsID'
+  },
+
+  'GET /team/exists/nbaid/:teamID': {
+    controller: 'team',
+    action: 'existsNBAID'
+  },
+
   'GET /team/:teamID': {
     controller: 'team',
     action: 'get'
