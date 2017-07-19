@@ -8,6 +8,12 @@
 
 module.exports = {
 
+  home: function(req, res) {
+    res.send({
+      hello: "world"
+    });
+  },
+
   /**
    * @type :: REST
    * @route :: /team/new
