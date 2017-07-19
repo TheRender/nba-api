@@ -73,7 +73,7 @@ module.exports = {
       function(callback) {
         // Add the player to the team
         Team.findOne({
-          id: player.teamID
+          teamID: player.teamID
         }).exec(function(err, teamName) {
           if (err) {
             console.log("There was an error finding the team.");
