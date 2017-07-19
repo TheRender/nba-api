@@ -13,6 +13,10 @@ module.exports = {
       type: 'string'
     },
 
+    gameID: {
+      type: 'string'
+    },
+
     location: {
       type: 'string'
     },

@@ -112,6 +112,11 @@ module.exports.routes = {
     action: 'new'
   },
 
+  'GET /gamelog/exists/nbaid/:logID': {
+    controller: 'gamelog',
+    action: 'existsNBAID'
+  },
+
   'POST /gamelog/edit': {
     controller: 'gamelog',
     action: 'edit'

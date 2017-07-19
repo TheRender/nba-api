@@ -65,7 +65,8 @@ module.exports = {
           freeThrowsAttempted: post.freeThrowsAttempted,
           freeThrowsPercentage: post.freeThrowsPercentage,
           fouls: post.fouls,
-          plusMinus: post.plusMinus
+          plusMinus: post.plusMinus,
+          gameID: post.gameID
         };
         Gamelog.create(obj).exec(function(err, gl) {
           if (err || gl == undefined) {
@@ -98,6 +99,28 @@ module.exports = {
         success: true,
         log: gamelog
       });
+    });
+  },
+
+  existsNBAID: function(req, res) {
+    req.validate({
+      logID: 'string'
+    });
+    Gamelog.findOne({
+      gameID: req.param('logID')
+    }).exec(function(err, game) {
+      if (err) {
+        console.log("There was an error finding the log.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else if (game == undefined) {
+        res.send({
+          exists: false
+        });
+      } else {
+        exists: true,
+        id: game.id
+      }
     });
   },
 

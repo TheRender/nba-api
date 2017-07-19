@@ -62,7 +62,8 @@ describe("Gamelog Controller", function() {
         freeThrowsAttempted: 23,
         freeThrowsPercentage: 23,
         fouls: 23,
-        plusMinus: 2
+        plusMinus: 2,
+        gameID: 0481341
       };
       agent
         .post('/gamelog/new')
