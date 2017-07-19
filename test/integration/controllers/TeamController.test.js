@@ -13,13 +13,14 @@ describe("Team Controller", function() {
       agent
         .post('/team/new')
         .send({
-          name: "The Bulls",
+          name: "Chicago Bulls",
           city: "Chicago",
           teamID: "12345",
           logo: "http://google.com",
           seasonWins: 20,
           seasonLosses: "0",
           location: "Chicago",
+          nickname: "The Bulls"
         })
         .expect(200)
         .end(function(err, res) {

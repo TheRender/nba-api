@@ -13,6 +13,10 @@ module.exports = {
       type: 'string'
     },
 
+    nickname: {
+      type: 'string'
+    },
+
     city: {
       type: 'string'
     },
