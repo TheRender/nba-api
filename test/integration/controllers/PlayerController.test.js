@@ -47,7 +47,7 @@ describe("Player Controller", function() {
           playerID: "67890",
           headshotURL: "http://google.com",
           teamName: "The Bulls",
-          teamID: team.id,
+          teamID: team.teamID,
           jerseyNumber: 0,
           position: "Guard",
           careerPPG: 0,
