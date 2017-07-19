@@ -118,8 +118,10 @@ module.exports = {
           exists: false
         });
       } else {
-        exists: true,
-        id: game.id
+        res.send({
+          exists: true,
+          id: game.id
+        });
       }
     });
   },
