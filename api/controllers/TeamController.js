@@ -230,6 +230,12 @@ module.exports = {
     var post = req.body;
     var tempID = post.id;
     delete post.id;
+    if (post.logs == undefined || post.logs.length == 0) {
+      delete post.logs;
+    }
+    if (post.players == undefined || post.players.length == 0) {
+      delete post.players;
+    }
     Team.update({
       id: tempID
     }, post).exec(function(err) {

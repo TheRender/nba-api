@@ -270,6 +270,9 @@ module.exports = {
    */
   edit: function(req, res) {
     var post = req.body;
+    if (post.stats == undefined || post.stats.length == 0) {
+      delete post.stats;
+    }
     Player.update({
       id: post.id
     }, post).exec(function(err) {
