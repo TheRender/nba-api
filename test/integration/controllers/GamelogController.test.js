@@ -43,7 +43,7 @@ describe("Gamelog Controller", function() {
       var obj = {
         date: "10/10/10",
         location: "Chicago",
-        teamID: team.id,
+        teamID: team.teamID,
         gameOpponent: "idk",
         opponentTeamID: "234123",
         score: "1-1",
