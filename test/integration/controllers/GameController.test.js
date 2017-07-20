@@ -30,42 +30,70 @@ describe("Game Controller", function() {
             done(err);
           } else {
             homeTeam = t;
-            done();
+            var awayObj = {
+              name: "The Knicks",
+              city: "New York",
+              teamID: "67890",
+              logo: "http://google.com",
+              seasonWins: 20,
+              seasonLosses: 0,
+              location: "New York",
+              players: [],
+              games: []
+            };
+            Team.findOne({
+              teamID: "67890"
+            }).exec(function(err, te) {
+              if (err) {
+                done(err);
+              } else if (te == undefined) {
+                Team.create(obj).exec(function(err, t) {
+                  if (err || t == undefined) {
+                    done(err);
+                  } else {
+                    awayTeam = t;
+                    done();
+                  }
+                });
+              } else {
+                awayTeam = te;
+                done();
+              }
+            });
           }
         });
       } else {
         homeTeam = te;
-        done();
-      }
-    });
-    var awayObj = {
-      name: "The Knicks",
-      city: "New York",
-      teamID: "67890",
-      logo: "http://google.com",
-      seasonWins: 20,
-      seasonLosses: 0,
-      location: "New York",
-      players: [],
-      games: []
-    };
-    Team.findOne({
-      teamID: "67890"
-    }).exec(function(err, te) {
-      if (err) {
-        done(err);
-      } else if (te == undefined) {
-        Team.create(obj).exec(function(err, t) {
-          if (err || t == undefined) {
+        var awayObj = {
+          name: "The Knicks",
+          city: "New York",
+          teamID: "67890",
+          logo: "http://google.com",
+          seasonWins: 20,
+          seasonLosses: 0,
+          location: "New York",
+          players: [],
+          games: []
+        };
+        Team.findOne({
+          teamID: "67890"
+        }).exec(function(err, te) {
+          if (err) {
             done(err);
+          } else if (te == undefined) {
+            Team.create(obj).exec(function(err, t) {
+              if (err || t == undefined) {
+                done(err);
+              } else {
+                awayTeam = t;
+                done();
+              }
+            });
           } else {
-            awayTeam = t;
+            awayTeam = te;
             done();
           }
         });
-      } else {
-        awayTeam = te;
-        done();
       }
     });
   });
