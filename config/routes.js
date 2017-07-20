@@ -132,6 +132,31 @@ module.exports.routes = {
     action: 'get'
   },
 
+  'POST /game/new': {
+    controller: 'game',
+    action: 'new'
+  },
+
+  'GET /game/exists/nbaid/:gameID': {
+    controller: 'game',
+    action: 'existsNBAID'
+  },
+
+  'POST /game/edit': {
+    controller: 'game',
+    action: 'edit'
+  },
+
+  'DELETE /game/delete': {
+    controller: 'game',
+    action: 'delete'
+  },
+
+  'GET /game/:gameID': {
+    controller: 'game',
+    action: 'get'
+  },
+
   'POST /playerstat/new': {
     controller: 'playerstat',
     action: 'new'
