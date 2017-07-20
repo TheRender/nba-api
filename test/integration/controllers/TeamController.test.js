@@ -20,7 +20,8 @@ describe("Team Controller", function() {
           seasonWins: 20,
           seasonLosses: "0",
           location: "Chicago",
-          nickname: "The Bulls"
+          nickname: "The Bulls",
+          tricode: 'CHI'
         })
         .expect(200)
         .end(function(err, res) {

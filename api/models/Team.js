@@ -51,6 +51,10 @@ module.exports = {
     logs: {
       type: 'array',
       defaultsTo: []
+    },
+
+    tricode: {
+      type: 'string'
     }
 
   }
