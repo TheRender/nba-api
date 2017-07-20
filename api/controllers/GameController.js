@@ -115,7 +115,7 @@ module.exports = {
 		], function(callback) {
 			res.send({
 				success: true,
-				game: game;
+				game: game
 			});
 		});
 	},
@@ -141,9 +141,9 @@ module.exports = {
 				 console.log("Error = " + err);
 				 res.serverError();
 			 } else {
-				 res.send{(
-					 game: game;
-				 )};
+				 res.send({
+					 game: game
+				 });
 			 }
 		 });
 	 },
@@ -193,9 +193,9 @@ module.exports = {
 					console.log("Error = " + err);
 					res.serverError();
 				} else {
-					res.send{(
+					res.send({
 						success: true
-					)};
+					});
 				}
 			});
 		},
