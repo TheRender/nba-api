@@ -25,7 +25,7 @@ describe("Game Controller", function() {
       if (err) {
         done(err);
       } else if (te == undefined) {
-        Team.create(obj).exec(function(err, t) {
+        Team.create(homeObj).exec(function(err, t) {
           if (err || t == undefined) {
             done(err);
           } else {
@@ -47,7 +47,7 @@ describe("Game Controller", function() {
               if (err) {
                 done(err);
               } else if (te == undefined) {
-                Team.create(obj).exec(function(err, t) {
+                Team.create(awayObj).exec(function(err, t) {
                   if (err || t == undefined) {
                     done(err);
                   } else {
@@ -81,7 +81,7 @@ describe("Game Controller", function() {
           if (err) {
             done(err);
           } else if (te == undefined) {
-            Team.create(obj).exec(function(err, t) {
+            Team.create(awayObj).exec(function(err, t) {
               if (err || t == undefined) {
                 done(err);
               } else {
