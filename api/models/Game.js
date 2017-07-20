@@ -61,140 +61,14 @@ module.exports = {
       type: 'string'
     },
 
-    homeMinutes: {
-      type: 'float'
+    homePlayers: {
+      type: 'array',
+      defaultsTo: []
     },
 
-    homePoints: {
-      type: 'float'
-    },
-
-    homeRebounds: {
-      type: 'float'
-    },
-
-    homeAssists: {
-      type: 'float'
-    },
-
-    homeSteals: {
-      type: 'float'
-    },
-
-    homeBlocks: {
-      type: 'float'
-    },
-
-    homeFieldGoalsMade: {
-      type: 'float'
-    },
-
-    homeFieldGoalsAttempted: {
-      type: 'float'
-    },
-
-    homeFieldGoalPercentage: {
-      type: 'float'
-    },
-
-    homeThreePointsMade: {
-      type: 'float'
-    },
-
-    homeThreePointsAttempted: {
-      type: 'float'
-    },
-
-    homeThreePointsPercentage: {
-      type: 'float'
-    },
-
-    homeFreeThrowsMade: {
-      type: 'float'
-    },
-
-    homeFreeThrowsAttempted: {
-      type: 'float'
-    },
-
-    homeFreeThrowsPercentage: {
-      type: 'float'
-    },
-
-    homeFouls: {
-      type: 'float'
-    },
-
-    homePlusMinus: {
-      type: 'float'
-    },
-
-    awayMinutes: {
-      type: 'float'
-    },
-
-    awayPoints: {
-      type: 'float'
-    },
-
-    awayRebounds: {
-      type: 'float'
-    },
-
-    awayAssists: {
-      type: 'float'
-    },
-
-    awaySteals: {
-      type: 'float'
-    },
-
-    awayBlocks: {
-      type: 'float'
-    },
-
-    awayFieldGoalsMade: {
-      type: 'float'
-    },
-
-    awayFieldGoalsAttempted: {
-      type: 'float'
-    },
-
-    awayFieldGoalPercentage: {
-      type: 'float'
-    },
-
-    awayThreePointsMade: {
-      type: 'float'
-    },
-
-    awayThreePointsAttempted: {
-      type: 'float'
-    },
-
-    awayThreePointsPercentage: {
-      type: 'float'
-    },
-
-    awayFreeThrowsMade: {
-      type: 'float'
-    },
-
-    awayFreeThrowsAttempted: {
-      type: 'float'
-    },
-
-    awayFreeThrowsPercentage: {
-      type: 'float'
-    },
-
-    awayFouls: {
-      type: 'float'
-    },
-
-    awayPlusMinus: {
-      type: 'float'
+    awayPlayers: {
+      type: 'array',
+      defaultsTo: []
     },
 
   }
