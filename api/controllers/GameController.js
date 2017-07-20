@@ -96,7 +96,7 @@ module.exports = {
 						callback();
 					}
 				});
-			}
+			},
 			function(callback) {
 				if (awayTeam.games == undefined) {
 					awayTeam.games = [];
