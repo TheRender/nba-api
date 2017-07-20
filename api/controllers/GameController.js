@@ -83,10 +83,10 @@ module.exports = {
 				});
 			},
 			function(callback) {
-				if (homeTeam.logs == undefined) {
-					homeTeam.logs = [];
+				if (homeTeam.games == undefined) {
+					homeTeam.games = [];
 				}
-				homeTeam.logs.unshift(game.id);
+				homeTeam.games.unshift(game.id);
 				homeTeam.save(function(err) {
 					if (err) {
 						console.log("There was an error saving the home team.");
@@ -98,10 +98,10 @@ module.exports = {
 				});
 			}
 			function(callback) {
-				if (awayTeam.logs == undefined) {
-					awayTeam.logs = [];
+				if (awayTeam.games == undefined) {
+					awayTeam.games = [];
 				}
-				awayTeam.logs.unshift(game.id);
+				awayTeam.games.unshift(game.id);
 				awayTeam.save(function(err) {
 					if (err) {
 						console.log("There was an error saving the away team.");
@@ -125,7 +125,7 @@ module.exports = {
    * @route :: /game/:gameID
    * @crud :: get
    * @description :: Retrieves the game information
-   * @param :: gameID - the ID of the game to look up
+   * @param :: gameID - the ID from the DB of the game to look up
    * @sample :: `{game: object}`
    * @sample :: `500`
    */
@@ -259,9 +259,9 @@ module.exports = {
 					 });
 				 },
 				 function(callback) {
-					 var index = homeTeam.logs.indexOf(game.id);
+					 var index = homeTeam.games.indexOf(game.id);
 					 if (index > -1) {
-						 homeTeam.logs.splice(index, 1);
+						 homeTeam.games.splice(index, 1);
 					 }
 					 homeTeam.save(function(err) {
 						 if (err) {
@@ -274,9 +274,9 @@ module.exports = {
 					 });
 				 },
 				 function(callback) {
-					 var index = awayTeam.logs.indexOf(game.id);
+					 var index = awayTeam.games.indexOf(game.id);
 					 if (index > -1) {
-						 awayTeam.logs.splice(index, 1);
+						 awayTeam.games.splice(index, 1);
 					 }
 					 awayTeam.save(function(err) {
 						 if (err) {

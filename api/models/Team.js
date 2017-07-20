@@ -48,7 +48,7 @@ module.exports = {
       type: 'string'
     },
 
-    logs: {
+    games: {
       type: 'array',
       defaultsTo: []
     }

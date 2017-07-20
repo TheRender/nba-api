@@ -17,7 +17,7 @@ describe("Game Controller", function() {
       seasonLosses: 0,
       location: "Chicago",
       players: [],
-      logs: []
+      games: []
     };
     Team.findOne({
       teamID: "12345"
@@ -47,7 +47,7 @@ describe("Game Controller", function() {
       seasonLosses: 0,
       location: "New York",
       players: [],
-      logs: []
+      games: []
     };
     Team.findOne({
       teamID: "67890"
@@ -116,8 +116,8 @@ describe("Game Controller", function() {
             if (err || game == undefined) {
               done(err);
             } else {
-              assert.include(homeTeam.logs, game.id);
-              assert.include(awayTeam.logs, game.id);
+              assert.include(homeTeam.games, game.id);
+              assert.include(awayTeam.games, game.id);
               done();
             }
           });
@@ -185,7 +185,7 @@ describe("Game Controller", function() {
         if (err || team == undefined) {
           done(err);
         } else {
-          assert.equal(homeTeam.logs.length, 0);
+          assert.equal(homeTeam.games.length, 0);
           done();
         }
       });
@@ -195,7 +195,7 @@ describe("Game Controller", function() {
         if (err || team == undefined) {
           done(err);
         } else {
-          assert.equal(awayTeam.logs.length, 0);
+          assert.equal(awayTeam.games.length, 0);
           done();
         }
       });
