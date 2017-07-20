@@ -43,7 +43,7 @@ module.exports = {
 			function(callback) {
 				Team.findOne({
 					teamID: post.awayTeamID
-				}).exec(function(err, teamname) {
+				}).exec(function(err, teamName) {
 					if (err || teamName == undefined) {
 						console.log('There was an error finding the away team.');
 						console.log("Error = " + err);
