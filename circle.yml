@@ -1,5 +1,5 @@
 general:
   branches:
     only:
-     - master # list of branches to build
-     - production
+    #  - master # list of branches to build
+    #  - production
