@@ -194,9 +194,9 @@ describe("Game Controller", function() {
     })
   });
   describe("edit", function() {
-    if("should edit a game", function(done) {
+    if("should edit a home game", function(done) {
       Game.findOne({
-        gameID: "54321"
+        gameID: homeTeam.gameID
       }).exec(function(err, game) {
         if (err || game == undefined) {
           done(err);
@@ -211,9 +211,38 @@ describe("Game Controller", function() {
         }
       });
     });
-    it("should have changed the game", function(done) {
+    it("should have changed the home game", function(done) {
       Game.findOne({
-        gameID: "54321"
+        gameID: homeTeam.gameID
+      }).exec(function(err, game) {
+        if (err || game == undefined) {
+          done(err);
+        } else {
+          assert.equal(game.date, "02/02/2017");
+          done();
+        }
+      });
+    });
+    if("should edit a away game", function(done) {
+      Game.findOne({
+        gameID: awayTeam.gameID
+      }).exec(function(err, game) {
+        if (err || game == undefined) {
+          done(err);
+        } else {
+          agent
+            .post('/game/edit')
+            .send({
+              id: game.id,
+              date: '02/02/2017'
+            })
+            .expect(200, done)
+        }
+      });
+    });
+    it("should have changed the away game", function(done) {
+      Game.findOne({
+        gameID: awayTeam.gameID
       }).exec(function(err, game) {
         if (err || game == undefined) {
           done(err);
