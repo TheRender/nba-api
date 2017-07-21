@@ -88,12 +88,12 @@ describe("Gamelog Controller", function() {
     it("should have added the gamelog to the player", function(done) {
       Player.findOne({
         playerID: "67890"
-      }).exec(function(err, player) {
-        if (err || player == undefined) {
+      }).exec(function(err, pl) {
+        if (err || pl == undefined) {
           done(err);
         } else {
           Gamelog.findOne({
-            gameID: player.gamelog[0].gameID
+            gameID: "54321"
           }).exec(function(err, gamelog) {
             if (err || gamelog == undefined) {
               done(err);
