@@ -254,7 +254,7 @@ describe("Game Controller", function() {
     });
   });
   describe("delete", function() {
-    it("should remove the game", function(done) {
+    it("should remove the home game", function(done) {
       Team.findOne({
         teamID: "12345"
       }).exec(function(err, team) {
@@ -262,22 +262,37 @@ describe("Game Controller", function() {
           done(err);
         } else {
           assert.equal(homeTeam.games.length, 0);
-          Team.findOne({
-            teamID: "67890"
-          }).exec(function(err, team) {
-            if (err || team == undefined) {
-              done(err);
-            } else {
-              assert.equal(awayTeam.games.length, 0);
-              done();
-            }
-          });
+          done();
         }
       });
     });
-    it("should have deleted the game record", function(done) {
+    it("should have deleted the home game record", function(done) {
       Game.findOne({
-        gameID: "54321"
+        gameID: homeTeam.gameID
+      }).exec(function(err, game) {
+        if (err || game == undefined) {
+          done(err);
+        } else {
+          assert.equal(undefined, game);
+          done();
+        }
+      });
+    });
+    it("should remove the away game", function(done) {
+      Team.findOne({
+        teamID: "12345"
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          assert.equal(awayTeam.games.length, 0);
+          done();
+        }
+      });
+    });
+    it("should have deleted the away game record", function(done) {
+      Game.findOne({
+        gameID: awayTeam.gameID
       }).exec(function(err, game) {
         if (err || game == undefined) {
           done(err);
