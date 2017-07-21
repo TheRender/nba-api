@@ -15,8 +15,7 @@ describe("Player Controller", function() {
       seasonWins: 20,
       seasonLosses: 0,
       location: "Chicago",
-      players: [],
-      logs: []
+      players: [],      
     };
     Team.findOne({
       teamID: "12345"

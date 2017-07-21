@@ -8,16 +8,16 @@ describe("Gamelog Controller", function() {
   before(function(done) {
     agent = request.agent(sails.hooks.http.app);
     var obj = {
-      name: "Russell Westbrook",
+      name: "John Smith",
       playerID: "67890",
-      headshotURL: "https://google.com",
-      teamName: "OKC Thunder",
+      headshotURL: "http://google.com",
+      teamName: "The Bulls",
       teamID: "12345",
       jerseyNumber: 0,
-      position: "Point Guard",
-      careerPPG: 30,
-      careerRPG: 10,
-      careerAPG: 10,
+      position: "Guard",
+      careerPPG: 0,
+      careerRPG: 0,
+      careerAPG: 0
       stats: [],
       gamelogs: []
     };
@@ -47,7 +47,7 @@ describe("Gamelog Controller", function() {
         date: "10/10/10",
         playerID: player.playerID,
         location: "Chicago",
-        teamID: "11111",
+        teamID: player.teamID,
         gameOpponent: "idk",
         opponentTeamID: "234123",
         score: "1-1",
@@ -93,7 +93,7 @@ describe("Gamelog Controller", function() {
           done(err);
         } else {
           Gamelog.findOne({
-            gameID: "54321"
+            gameID: player.gamelog[0].gameID
           }).exec(function(err, gamelog) {
             if (err || gamelog == undefined) {
               done(err);
