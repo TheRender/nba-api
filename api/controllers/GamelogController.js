@@ -44,13 +44,7 @@ module.exports = {
       },
       function(callback) {
         var obj = {
-          date: post.date,
           playerID: player.id,
-          location: post.location,
-          teamID: post.teamID,
-          gameOpponent: post.gameOpponent,
-          opponentTeamID: post.opponentTeamID,
-          score: post.score,
           minutes: post.minutes,
           points: post.points,
           rebounds: post.rebounds,
@@ -229,9 +223,9 @@ module.exports = {
         });
       },
       function(callback) {
-        var index = player.logs.indexOf(log.id);
+        var index = player.gamelogs.indexOf(log.id);
         if (index > -1) {
-          player.logs.splice(index, 1);
+          player.gamelogs.splice(index, 1);
         }
         player.save(function(err) {
           if (err) {
