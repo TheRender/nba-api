@@ -93,12 +93,12 @@ describe("Gamelog Controller", function() {
           done(err);
         } else {
           Gamelog.findOne({
-            gameID: "54321"
-          }).exec(function(err, gamelog) {
-            if (err || gamelog == undefined) {
+            gameID: player.gamelog.id
+          }).exec(function(err, gl) {
+            if (err || gl == undefined) {
               done(err);
             } else {
-              assert.include(pl.gamelogs, gamelog.id);
+              assert.include(pl.gamelogs, gl.id);
               done();
             }
           });
