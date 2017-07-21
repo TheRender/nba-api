@@ -9,35 +9,11 @@ module.exports = {
 
   attributes: {
 
-    date: {
-      type: 'string'
-    },
-
     playerID: {
       type: 'string'
     },
 
     gameID: {
-      type: 'string'
-    },
-
-    location: {
-      type: 'string'
-    },
-
-    teamID: {
-      type: 'string'
-    },
-
-    gameOpponent: {
-      type: 'string'
-    },
-
-    opponentTeamID: {
-      type: 'string'
-    },
-
-    score: {
       type: 'string'
     },
 

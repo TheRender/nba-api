@@ -45,7 +45,7 @@ describe("Gamelog Controller", function() {
     it("should create a new gamelog", function(done) {
       var obj = {
         date: "10/10/10",
-        playerID: player.playerID,
+        playerID: player.id,
         location: "Chicago",
         teamID: player.teamID,
         gameOpponent: "idk",

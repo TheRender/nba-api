@@ -44,13 +44,7 @@ module.exports = {
       },
       function(callback) {
         var obj = {
-          date: post.date,
           playerID: player.id,
-          location: post.location,
-          teamID: post.teamID,
-          gameOpponent: post.gameOpponent,
-          opponentTeamID: post.opponentTeamID,
-          score: post.score,
           minutes: post.minutes,
           points: post.points,
           rebounds: post.rebounds,
@@ -81,10 +75,10 @@ module.exports = {
         });
       },
       function(callback) {
-        if (player.logs == undefined) {
-          player.logs = [];
+        if (player.gamelogs == undefined) {
+          player.gamelogs = [];
         }
-        player.logs.unshift(gamelog.id);
+        player.gamelogs.unshift(gamelog.id);
         player.save(function(err) {
           if (err) {
             console.log("There was an error saving the player.");
@@ -228,9 +222,9 @@ module.exports = {
         });
       },
       function(callback) {
-        var index = player.logs.indexOf(log.id);
+        var index = player.gamelogs.indexOf(log.id);
         if (index > -1) {
-          player.logs.splice(index, 1);
+          player.gamelogs.splice(index, 1);
         }
         player.save(function(err) {
           if (err) {
