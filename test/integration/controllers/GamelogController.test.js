@@ -93,7 +93,7 @@ describe("Gamelog Controller", function() {
           done(err);
         } else {
           Gamelog.findOne({
-            gameID: player.gamelog.id
+            gameID: player.gamelog.gameID
           }).exec(function(err, gl) {
             if (err || gl == undefined) {
               done(err);
