@@ -145,26 +145,27 @@ describe("Game Controller", function() {
               done(err);
             } else {
               assert.include(homeTeam.games, game.id);
-              it("should have added the game to the away team", function(done) {
-                Team.findOne({
-                  teamID: "67890"
-                }).exec(function(err, team) {
-                  if (err || team == undefined) {
-                    done(err);
-                  } else {
-                    Game.findOne({
-                      gameID: "54321"
-                    }).exec(function(err, game) {
-                      if (err || game == undefined) {
-                        done(err);
-                      } else {
-                        assert.include(awayTeam.games, game.id);
-                        done();
-                      }
-                    });
-                  }
-                });
-              });              
+              done();
+            }
+          });
+        }
+      });
+    });
+    it("should have added the game to the away team", function(done) {
+      Team.findOne({
+        teamID: "67890"
+      }).exec(function(err, team) {
+        if (err || team == undefined) {
+          done(err);
+        } else {
+          Game.findOne({
+            gameID: "54321"
+          }).exec(function(err, game) {
+            if (err || game == undefined) {
+              done(err);
+            } else {
+              assert.include(awayTeam.games, game.id);
+              done();
             }
           });
         }
