@@ -58,9 +58,9 @@ module.exports = {
           seasonWins: post.seasonWins,
           seasonLosses: post.seasonLosses,
           location: post.location,
-          logs: [],
           nickname: post.nickname,
-          tricode: post.tricode
+          tricode: post.tricode,
+          games: []
         };
 
         Team.create(obj).exec(function(err, team) {
