@@ -17,7 +17,7 @@ describe("Gamelog Controller", function() {
       position: "Guard",
       careerPPG: 0,
       careerRPG: 0,
-      careerAPG: 0
+      careerAPG: 0,
       stats: [],
       gamelogs: []
     };
