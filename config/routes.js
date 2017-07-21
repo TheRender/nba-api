@@ -112,7 +112,7 @@ module.exports.routes = {
     action: 'new'
   },
 
-  'GET /gamelog/exists/nbaid/:logID': {
+  'GET /gamelog/exists/nbaid/:gameID/:playerID': {
     controller: 'gamelog',
     action: 'existsNBAID'
   },

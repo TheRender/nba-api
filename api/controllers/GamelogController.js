@@ -81,10 +81,10 @@ module.exports = {
         });
       },
       function(callback) {
-        if (player.logs == undefined) {
-          player.logs = [];
+        if (player.gamelogs == undefined) {
+          player.gamelogs = [];
         }
-        player.logs.unshift(gamelog.id);
+        player.gamelogs.unshift(gamelog.id);
         player.save(function(err) {
           if (err) {
             console.log("There was an error saving the player.");
@@ -98,7 +98,7 @@ module.exports = {
     ], function(callback) {
       res.send({
         success: true,
-        log: gamelog
+        gamelog: gamelog
       });
     });
   },
@@ -108,7 +108,8 @@ module.exports = {
       logID: 'string'
     });
     Gamelog.findOne({
-      gameID: req.param('logID')
+      gameID: req.param('gameID'),
+      playerID: req.param('playerID')
     }).exec(function(err, game) {
       if (err) {
         console.log("There was an error finding the log.");
