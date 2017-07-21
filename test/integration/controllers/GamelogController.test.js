@@ -98,7 +98,7 @@ describe("Gamelog Controller", function() {
             if (err || gamelog == undefined) {
               done(err);
             } else {
-              assert.include(player.gamelogs, gamelog.id);
+              assert.include(pl.gamelogs, gamelog.id);
               done();
             }
           });
