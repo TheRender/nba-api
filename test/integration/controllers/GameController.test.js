@@ -139,7 +139,7 @@ describe("Game Controller", function() {
           done(err);
         } else {
           Game.findOne({
-            gameID: "54321"
+            gameID: game.id
           }).exec(function(err, game) {
             if (err || game == undefined) {
               done(err);
@@ -159,7 +159,7 @@ describe("Game Controller", function() {
           done(err);
         } else {
           Game.findOne({
-            gameID: "54321"
+            gameID: game.id
           }).exec(function(err, game) {
             if (err || game == undefined) {
               done(err);
