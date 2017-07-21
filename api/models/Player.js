@@ -55,7 +55,12 @@ module.exports = {
     stats: {
       type: 'array',
       defaultsTo: []
-    }
+    },
+
+    gamelogs: {
+      type: 'array',
+      defaultsTo: []
+    },
 
   }
 };

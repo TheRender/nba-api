@@ -13,6 +13,10 @@ module.exports = {
       type: 'string'
     },
 
+    playerID: {
+      type: 'string'
+    },
+
     gameID: {
       type: 'string'
     },

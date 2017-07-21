@@ -2,38 +2,41 @@ var request = require('supertest');
 var assert = require('chai').assert;
 
 var agent;
-var team;
+var player;
 
 describe("Gamelog Controller", function() {
   before(function(done) {
     agent = request.agent(sails.hooks.http.app);
     var obj = {
-      name: "The Bulls",
-      city: "Chicago",
+      name: "Russell Westbrook",
+      playerID: "67890",
+      headshotURL: "https://google.com",
+      teamName: "OKC Thunder",
       teamID: "12345",
-      logo: "http://google.com",
-      seasonWins: 20,
-      seasonLosses: 0,
-      location: "Chicago",
-      players: [],
-      logs: []
+      jerseyNumber: 0,
+      position: "Point Guard",
+      careerPPG: 30,
+      careerRPG: 10,
+      careerAPG: 10,
+      stats: [],
+      gamelogs: []
     };
-    Team.findOne({
-      teamID: "12345"
-    }).exec(function(err, te) {
+    Player.findOne({
+      playerID: "67890"
+    }).exec(function(err, pl) {
       if (err) {
         done(err);
-      } else if (te == undefined) {
-        Team.create(obj).exec(function(err, t) {
-          if (err || t == undefined) {
+      } else if (pl == undefined) {
+        Player.create(obj).exec(function(err, p) {
+          if (err || p == undefined) {
             done(err);
           } else {
-            team = t;
+            player = p;
             done();
           }
         });
       } else {
-        team = te;
+        player = pl;
         done();
       }
     });
@@ -42,8 +45,9 @@ describe("Gamelog Controller", function() {
     it("should create a new gamelog", function(done) {
       var obj = {
         date: "10/10/10",
+        playerID: player.playerID,
         location: "Chicago",
-        teamID: team.teamID,
+        teamID: "11111",
         gameOpponent: "idk",
         opponentTeamID: "234123",
         score: "1-1",
@@ -63,7 +67,7 @@ describe("Gamelog Controller", function() {
         freeThrowsPercentage: 23,
         fouls: 23,
         plusMinus: 2,
-        gameID: 0481341
+        gameID: "54321"
       };
       agent
         .post('/gamelog/new')
@@ -72,7 +76,7 @@ describe("Gamelog Controller", function() {
     });
     it("should create a gamelog", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, gamelog) {
         if (err || gamelog == undefined) {
           done(err);
@@ -81,20 +85,20 @@ describe("Gamelog Controller", function() {
         }
       });
     });
-    it("should have added the gamelog to the team", function(done) {
-      Team.findOne({
-        teamID: "12345"
-      }).exec(function(err, team) {
-        if (err || team == undefined) {
+    it("should have added the gamelog to the player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
           done(err);
         } else {
           Gamelog.findOne({
-            location: "Chicago"
+            gameID: "54321"
           }).exec(function(err, gamelog) {
             if (err || gamelog == undefined) {
               done(err);
             } else {
-              assert.include(team.logs, gamelog.id);
+              assert.include(player.gamelogs, gamelog.id);
               done();
             }
           });
@@ -105,7 +109,7 @@ describe("Gamelog Controller", function() {
   describe("get", function() {
     it("should get a gamelog", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, gameLog) {
         if (err || gameLog == undefined) {
           done(err);
@@ -116,7 +120,7 @@ describe("Gamelog Controller", function() {
             .end(function(err, res) {
               if (err) done(err);
               var post = res.body.log;
-              assert.equal(post.location, "Chicago");
+              assert.equal(post.gameID, "54321");
               done();
             });
         }
@@ -126,7 +130,7 @@ describe("Gamelog Controller", function() {
   describe("edit", function() {
     it("should edit a gamelog", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, log) {
         if (err || log == undefined) {
           done(err);
@@ -143,7 +147,7 @@ describe("Gamelog Controller", function() {
     });
     it("should have changed the log", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, log) {
         if (err || log == undefined) {
           done(err);
@@ -157,7 +161,7 @@ describe("Gamelog Controller", function() {
   describe("delete", function() {
     it("should remove the gamelog", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, log) {
         if (err || log == undefined) {
           done(err);
@@ -172,20 +176,20 @@ describe("Gamelog Controller", function() {
       });
     });
     it("should remove the log from the team", function(done) {
-      Team.findOne({
-        teamID: "12345"
-      }).exec(function(err, team) {
-        if (err || team == undefined) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
           done(err);
         } else {
-          assert.equal(team.logs.length, 0);
+          assert.equal(player.logs.length, 0);
           done();
         }
       });
     });
     it("should have deleted the gamelog record", function(done) {
       Gamelog.findOne({
-        location: "Chicago"
+        gameID: "54321"
       }).exec(function(err, log) {
         if (err) {
           done(err);

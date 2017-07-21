@@ -4,7 +4,7 @@
  * @author :: Steven Hanna
  * @description :: Controller logic for Gamelogs.
  * @see :: /models/Gamelog.js
- * @parent :: /models/Team.js
+ * @parent :: /models/Player.js
  */
 
 module.exports = {
@@ -19,25 +19,25 @@ module.exports = {
    * fieldGoalPercentage, threePointsMade, threePointsAttempted,
    * threePointsPercentage, freeThrowsMade, freeThrowsAttempted,
    * freeThrowsPercentage, fouls, plusMinus`
-   * @note :: Make sure to include the `teamID` so this can be linked properly
+   * @note :: Make sure to include the `playerID` so this can be linked properly
    * @sample :: `{ success: true, log: object}`
    * @sample :: `500`
    */
   new: function(req, res) {
     var post = req.body;
-    var team;
+    var player;
     var gamelog;
     async.series([
       function(callback) {
-        Team.findOne({
-          teamID: post.teamID
-        }).exec(function(err, teamName) {
-          if (err || teamName == undefined) {
-            console.log("There was an error finding the team.");
+        Player.findOne({
+          playerID: post.playerID
+        }).exec(function(err, playerName) {
+          if (err || playerName == undefined) {
+            console.log("There was an error finding the player.");
             console.log("Error = " + err);
             res.serverError();
           } else {
-            team = teamName;
+            player = playerName;
             callback();
           }
         });
@@ -45,8 +45,9 @@ module.exports = {
       function(callback) {
         var obj = {
           date: post.date,
+          playerID: player.id,
           location: post.location,
-          teamID: team.id,
+          teamID: post.teamID,
           gameOpponent: post.gameOpponent,
           opponentTeamID: post.opponentTeamID,
           score: post.score,
@@ -80,13 +81,13 @@ module.exports = {
         });
       },
       function(callback) {
-        if (team.logs == undefined) {
-          team.logs = [];
+        if (player.logs == undefined) {
+          player.logs = [];
         }
-        team.logs.unshift(gamelog.id);
-        team.save(function(err) {
+        player.logs.unshift(gamelog.id);
+        player.save(function(err) {
           if (err) {
-            console.log("There was an error saving the team.");
+            console.log("There was an error saving the player.");
             console.log("Error = " + err);
             res.serverError();
           } else {
@@ -196,7 +197,7 @@ module.exports = {
     var post = req.body;
 
     var log;
-    var team;
+    var player;
     async.series([
       function(callback) {
         Gamelog.findOne({
@@ -213,27 +214,27 @@ module.exports = {
         });
       },
       function(callback) {
-        Team.findOne({
-          id: log.teamID
-        }).exec(function(err, tm) {
-          if (err || tm == undefined) {
-            console.log("There was an error finding the team.");
+        Player.findOne({
+          id: log.playerID
+        }).exec(function(err, pl) {
+          if (err || pl == undefined) {
+            console.log("There was an error finding the player.");
             console.log("Error = " + err);
             res.serverError();
           } else {
-            team = tm;
+            player = pl;
             callback();
           }
         });
       },
       function(callback) {
-        var index = team.logs.indexOf(log.id);
+        var index = player.logs.indexOf(log.id);
         if (index > -1) {
-          team.logs.splice(index, 1);
+          player.logs.splice(index, 1);
         }
-        team.save(function(err) {
+        player.save(function(err) {
           if (err) {
-            console.log("There was an error saving the team after removing the log.");
+            console.log("There was an error saving the player after removing the log.");
             console.log("Error = " + err);
             res.serverError();
           } else {
