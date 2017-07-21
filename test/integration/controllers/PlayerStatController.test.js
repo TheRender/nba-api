@@ -87,7 +87,7 @@ describe("PlayerStat Controller", function() {
           if (err || playerstat == undefined) {
             done(err);
           } else {
-            assert.include(player.stats, palyerstat.id);
+            assert.include(player.stats, playerstat.id);
             done();
           }
         });
