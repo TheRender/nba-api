@@ -6,35 +6,48 @@ var team;
 
 describe("Player Controller", function() {
   before(function(done) {
-    agent = request.agent(sails.hooks.http.app);
-    var obj = {
-      name: "The Bulls",
-      city: "Chicago",
-      teamID: "12345",
-      logo: "http://google.com",
-      seasonWins: 20,
-      seasonLosses: 0,
-      location: "Chicago",
-      players: [],
-      logs: []
-    };
-    Team.findOne({
-      teamID: "12345"
-    }).exec(function(err, te) {
+    Player.destroy().exec(function(err) {
       if (err) {
+        console.log(err);
         done(err);
-      } else if (te == undefined) {
-        Team.create(obj).exec(function(err, t) {
-          if (err || t == undefined) {
+      } else {
+        Team.destroy().exec(function(err) {
+          if (err) {
+            console.log(err);
             done(err);
           } else {
-            team = t;
-            done();
+            agent = request.agent(sails.hooks.http.app);
+            var obj = {
+              name: "The Bulls",
+              city: "Chicago",
+              teamID: "12345",
+              logo: "http://google.com",
+              seasonWins: 20,
+              seasonLosses: 0,
+              location: "Chicago",
+              players: [],
+            };
+            Team.findOne({
+              teamID: "12345"
+            }).exec(function(err, te) {
+              if (err) {
+                done(err);
+              } else if (te == undefined) {
+                Team.create(obj).exec(function(err, t) {
+                  if (err || t == undefined) {
+                    done(err);
+                  } else {
+                    team = t;
+                    done();
+                  }
+                });
+              } else {
+                team = te;
+                done();
+              }
+            });
           }
-        });
-      } else {
-        team = te;
-        done();
+        })
       }
     });
   });

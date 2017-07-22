@@ -8,6 +8,13 @@
 
 module.exports = {
 
+  /**
+   * @type :: REST
+   * @route :: /
+   * @crud :: get
+   * @description :: Just a / route to make sure that DNS works among other shit
+   * @sample :: `{ hello: "world" }`
+   */
   home: function(req, res) {
     res.send({
       hello: "world"
@@ -237,8 +244,8 @@ module.exports = {
     var post = req.body;
     var tempID = post.id;
     delete post.id;
-    if (post.logs == undefined || post.logs.length == 0) {
-      delete post.logs;
+    if (post.games == undefined || post.games.length == 0) {
+      delete post.games;
     }
     if (post.players == undefined || post.players.length == 0) {
       delete post.players;
@@ -287,8 +294,8 @@ module.exports = {
         });
       },
       function(callback) {
-        Gamelog.destroy({
-          id: team.logs
+        Game.destroy({
+          id: team.games
         }).exec(function(err) {
           if (err) {
             console.log("There was an error deleting the game logs.");

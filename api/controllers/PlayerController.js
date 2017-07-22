@@ -57,7 +57,8 @@ module.exports = {
           careerPPG: post.careerPPG,
           careerRPG: post.careerRPG,
           careerAPG: post.careerAPG,
-          stats: []
+          stats: [],
+          gamelogs: []
         };
         Player.create(playerObj).exec(function(err, play) {
           if (err || play == undefined) {
@@ -273,6 +274,9 @@ module.exports = {
     if (post.stats == undefined || post.stats.length == 0) {
       delete post.stats;
     }
+    if (post.gamelogs == undefined || post.gamelogs.length == 0) {
+      delete post.gamelogs;
+    }
     Player.update({
       id: post.id
     }, post).exec(function(err) {
@@ -353,6 +357,19 @@ module.exports = {
         }).exec(function(err) {
           if (err) {
             console.log("There was an error destroying the player stats.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        Gamelog.destroy({
+          id: player.gamelogs
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error deleting the gamelogs.");
             console.log("Error = " + err);
             res.serverError();
           } else {
