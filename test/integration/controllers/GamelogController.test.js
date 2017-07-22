@@ -203,7 +203,7 @@ describe("Gamelog Controller", function() {
         }
       });
     });
-    it("should remove the log from the team", function(done) {
+    it("should remove the gamelog from the player", function(done) {
       Player.findOne({
         playerID: "67890"
       }).exec(function(err, player) {
