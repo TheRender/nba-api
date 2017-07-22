@@ -126,8 +126,6 @@ describe("Gamelog Controller", function() {
             if (err || gl == undefined) {
               done(err);
             } else {
-              console.log(pl);
-              console.log(gl);
               assert.include(pl.gamelogs, gl.id);
               done();
             }
@@ -212,8 +210,6 @@ describe("Gamelog Controller", function() {
         if (err || player == undefined) {
           done(err);
         } else {
-          console.log("REMOVE LOG");
-          console.log(player);
           assert.equal(player.gamelogs.length, 0);
           done();
         }

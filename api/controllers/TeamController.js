@@ -8,6 +8,13 @@
 
 module.exports = {
 
+  /**
+   * @type :: REST
+   * @route :: /
+   * @crud :: get
+   * @description :: Just a / route to make sure that DNS works among other shit
+   * @sample :: `{ hello: "world" }`
+   */
   home: function(req, res) {
     res.send({
       hello: "world"

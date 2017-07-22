@@ -73,8 +73,6 @@ module.exports = {
       },
       function(callback) {
         // Add the player to the team
-        console.log("Adding the player to the team");
-        console.log(player.teamID);
         Team.findOne({
           id: player.teamID
         }).exec(function(err, teamName) {
@@ -318,7 +316,6 @@ module.exports = {
             res.serverError();
           } else {
             player = play;
-            console.log(player);
             callback();
           }
         });
@@ -334,7 +331,6 @@ module.exports = {
             res.serverError();
           } else {
             team = teamName;
-            console.log("DELETE PLAYER: " + team);
             callback();
           }
         });
@@ -345,7 +341,6 @@ module.exports = {
         if (index > -1) {
           team.players.splice(index, 1);
         }
-        console.log("REMOVE: " + team);
         team.save(function(err) {
           if (err) {
             console.log("There was an error saving the team.");
