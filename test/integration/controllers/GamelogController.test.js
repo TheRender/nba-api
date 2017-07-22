@@ -8,36 +8,64 @@ describe("Gamelog Controller", function() {
   before(function(done) {
     agent = request.agent(sails.hooks.http.app);
     var obj = {
-      name: "John Smith",
-      playerID: "67890",
-      headshotURL: "http://google.com",
-      teamName: "The Bulls",
+      name: "The Bulls",
+      city: "Chicago",
       teamID: "12345",
-      jerseyNumber: 0,
-      position: "Guard",
-      careerPPG: 0,
-      careerRPG: 0,
-      careerAPG: 0,
-      stats: [],
-      gamelogs: []
+      logo: "http://google.com",
+      seasonWins: 20,
+      seasonLosses: 0,
+      location: "Chicago",
+      players: [],
     };
-    Player.findOne({
-      playerID: "67890"
-    }).exec(function(err, pl) {
+    Team.findOne({
+      teamID: "12345"
+    }).exec(function(err, te) {
       if (err) {
         done(err);
-      } else if (pl == undefined) {
-        Player.create(obj).exec(function(err, p) {
-          if (err || p == undefined) {
+      } else if (te == undefined) {
+        Team.create(obj).exec(function(err, t) {
+          if (err || t == undefined) {
             done(err);
           } else {
-            player = p;
+            team = t;
             done();
           }
         });
       } else {
-        player = pl;
-        done();
+        team = te;
+        var obj = {
+          name: "John Smith",
+          playerID: "67890",
+          headshotURL: "http://google.com",
+          teamName: "The Bulls",
+          teamID: team.id,
+          jerseyNumber: 0,
+          position: "Guard",
+          careerPPG: 0,
+          careerRPG: 0,
+          careerAPG: 0,
+          stats: [],
+          gamelogs: []
+        };
+        Player.findOne({
+          playerID: "67890"
+        }).exec(function(err, pl) {
+          if (err) {
+            done(err);
+          } else if (pl == undefined) {
+            Player.create(obj).exec(function(err, p) {
+              if (err || p == undefined) {
+                done(err);
+              } else {
+                player = p;
+                done();
+              }
+            });
+          } else {
+            player = pl;
+            done();
+          }
+        });
       }
     });
   });
@@ -93,11 +121,13 @@ describe("Gamelog Controller", function() {
           done(err);
         } else {
           Gamelog.findOne({
-            gameID: player.gamelog.gameID
+            gameID: player.gamelogs.gameID
           }).exec(function(err, gl) {
             if (err || gl == undefined) {
               done(err);
             } else {
+              console.log(pl);
+              console.log(gl);
               assert.include(pl.gamelogs, gl.id);
               done();
             }
@@ -182,7 +212,9 @@ describe("Gamelog Controller", function() {
         if (err || player == undefined) {
           done(err);
         } else {
-          assert.equal(player.logs.length, 0);
+          console.log("REMOVE LOG");
+          console.log(player);
+          assert.equal(player.gamelogs.length, 0);
           done();
         }
       });

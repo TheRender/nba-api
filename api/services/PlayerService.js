@@ -20,17 +20,37 @@ module.exports = {
    * @return :: The entire player object with playerstats
    */
   getPlayerStats: function(playerObj, cb) {
-    PlayerStat.find({
-      id: playerObj.stats
-    }).exec(function(err, stats) {
-      if (err || stats == undefined) {
-        console.log("There was an error finding the stats.");
-        console.log("Error = " + err);
-        cb(err, undefined);
-      } else {
-        playerObj.stats = stats;
-        cb(undefined, playerObj);
-      }
+    async.parallel([
+      function(callback) {
+        PlayerStat.find({
+          id: playerObj.stats
+        }).exec(function(err, stats) {
+          if (err || stats == undefined) {
+            console.log("There was an error finding the stats.");
+            console.log("Error = " + err);
+            cb(err, undefined);
+          } else {
+            playerObj.stats = stats;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        Gamelog.find({
+          id: playerObj.gamelogs
+        }).exec(function(err, gamelogs) {
+          if (err || gamelogs == undefined) {
+            console.log("There was an error finding the gamelogs.");
+            console.log("Error = " + err);
+            cb(err, undefined);
+          } else {
+            playerObj.gamelogs = gamelogs;
+            callback();
+          }
+        });
+      },
+    ], function(callback) {
+      cb(undefined, playerObj);
     });
   },
 

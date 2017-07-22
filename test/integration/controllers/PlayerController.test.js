@@ -15,7 +15,7 @@ describe("Player Controller", function() {
       seasonWins: 20,
       seasonLosses: 0,
       location: "Chicago",
-      players: [],      
+      players: [],
     };
     Team.findOne({
       teamID: "12345"
@@ -39,6 +39,7 @@ describe("Player Controller", function() {
   });
   describe("new", function() {
     it("should create a new player", function(done) {
+      console.log("TEAM ID: " + team.id);
       agent
         .post('/player/new')
         .send({
@@ -62,6 +63,7 @@ describe("Player Controller", function() {
         if (err || player == undefined) {
           done(err);
         } else {
+          console.log("ID AGAIN: " + player.teamID);
           assert.equal(player.name, "John Smith");
           done();
         }

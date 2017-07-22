@@ -237,8 +237,8 @@ module.exports = {
     var post = req.body;
     var tempID = post.id;
     delete post.id;
-    if (post.logs == undefined || post.logs.length == 0) {
-      delete post.logs;
+    if (post.games == undefined || post.games.length == 0) {
+      delete post.games;
     }
     if (post.players == undefined || post.players.length == 0) {
       delete post.players;
@@ -287,8 +287,8 @@ module.exports = {
         });
       },
       function(callback) {
-        Gamelog.destroy({
-          id: team.logs
+        Game.destroy({
+          id: team.games
         }).exec(function(err) {
           if (err) {
             console.log("There was an error deleting the game logs.");

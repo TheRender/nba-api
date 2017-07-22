@@ -30,7 +30,7 @@ module.exports = {
     async.series([
       function(callback) {
         Player.findOne({
-          playerID: post.playerID
+          id: post.playerID
         }).exec(function(err, playerName) {
           if (err || playerName == undefined) {
             console.log("There was an error finding the player.");
@@ -223,6 +223,8 @@ module.exports = {
         });
       },
       function(callback) {
+        console.log(player);
+        console.log(log);
         var index = player.gamelogs.indexOf(log.id);
         if (index > -1) {
           player.gamelogs.splice(index, 1);

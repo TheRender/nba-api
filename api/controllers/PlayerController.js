@@ -57,7 +57,8 @@ module.exports = {
           careerPPG: post.careerPPG,
           careerRPG: post.careerRPG,
           careerAPG: post.careerAPG,
-          stats: []
+          stats: [],
+          gamelogs: []
         };
         Player.create(playerObj).exec(function(err, play) {
           if (err || play == undefined) {
@@ -72,6 +73,8 @@ module.exports = {
       },
       function(callback) {
         // Add the player to the team
+        console.log("Adding the player to the team");
+        console.log(player.teamID);
         Team.findOne({
           id: player.teamID
         }).exec(function(err, teamName) {
@@ -273,6 +276,9 @@ module.exports = {
     if (post.stats == undefined || post.stats.length == 0) {
       delete post.stats;
     }
+    if (post.gamelogs == undefined || post.gamelogs.length == 0) {
+      delete post.gamelogs;
+    }
     Player.update({
       id: post.id
     }, post).exec(function(err) {
@@ -312,6 +318,7 @@ module.exports = {
             res.serverError();
           } else {
             player = play;
+            console.log(player);
             callback();
           }
         });
@@ -327,6 +334,7 @@ module.exports = {
             res.serverError();
           } else {
             team = teamName;
+            console.log("DELETE PLAYER: " + team);
             callback();
           }
         });
@@ -337,6 +345,7 @@ module.exports = {
         if (index > -1) {
           team.players.splice(index, 1);
         }
+        console.log("REMOVE: " + team);
         team.save(function(err) {
           if (err) {
             console.log("There was an error saving the team.");
@@ -353,6 +362,19 @@ module.exports = {
         }).exec(function(err) {
           if (err) {
             console.log("There was an error destroying the player stats.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        Gamelog.destroy({
+          id: player.gamelogs
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error deleting the gamelogs.");
             console.log("Error = " + err);
             res.serverError();
           } else {
