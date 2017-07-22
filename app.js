@@ -49,11 +49,19 @@ process.chdir(__dirname);
       console.error('Your `.sailsrc` file(s) will be ignored.');
       console.error('To resolve this, run:');
       console.error('npm install rc --save');
-      rc = function () { return {}; };
+      rc = function() {
+        return {};
+      };
     }
   }
 
 
   // Start server
+  var Rollbar = require('rollbar');
+  var rollbar = new Rollbar({
+    accessToken: '613b5e7a4dd4491e983e295568e7dc24',
+    handleUncaughtExceptions: true,
+    handleUnhandledRejections: true
+  });
   sails.lift(rc('sails'));
 })();
