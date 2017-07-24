@@ -137,6 +137,11 @@ module.exports.routes = {
     action: 'new'
   },
 
+  'GET /games': {
+    controller: 'game',
+    action: 'getAll'
+  },
+
   'GET /game/exists/nbaid/:gameID': {
     controller: 'game',
     action: 'existsNBAID'
