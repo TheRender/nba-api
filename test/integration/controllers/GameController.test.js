@@ -172,6 +172,14 @@ describe("Game Controller", function() {
       });
     });
   });
+  describe("getAll", function() {
+    it("should get all the games", function(done) {
+      agent
+        .get('/games')
+        .set('Accept', 'application/json')
+        .expect(200, done);
+    });
+  });
   describe("get", function() {
     it("should get a game", function(done) {
       Game.findOne({
@@ -194,23 +202,23 @@ describe("Game Controller", function() {
     })
   });
   describe("edit", function() {
-    if("should edit a home game", function(done) {
-      Game.findOne({
-        gameID: homeTeam.gameID
-      }).exec(function(err, game) {
-        if (err || game == undefined) {
-          done(err);
-        } else {
-          agent
-            .post('/game/edit')
-            .send({
-              id: game.id,
-              date: '02/02/2017'
-            })
-            .expect(200, done)
-        }
+    if ("should edit a home game", function(done) {
+        Game.findOne({
+          gameID: homeTeam.gameID
+        }).exec(function(err, game) {
+          if (err || game == undefined) {
+            done(err);
+          } else {
+            agent
+              .post('/game/edit')
+              .send({
+                id: game.id,
+                date: '02/02/2017'
+              })
+              .expect(200, done)
+          }
+        });
       });
-    });
     it("should have changed the home game", function(done) {
       Game.findOne({
         gameID: homeTeam.gameID
@@ -223,23 +231,23 @@ describe("Game Controller", function() {
         }
       });
     });
-    if("should edit a away game", function(done) {
-      Game.findOne({
-        gameID: awayTeam.gameID
-      }).exec(function(err, game) {
-        if (err || game == undefined) {
-          done(err);
-        } else {
-          agent
-            .post('/game/edit')
-            .send({
-              id: game.id,
-              date: '02/02/2017'
-            })
-            .expect(200, done)
-        }
+    if ("should edit a away game", function(done) {
+        Game.findOne({
+          gameID: awayTeam.gameID
+        }).exec(function(err, game) {
+          if (err || game == undefined) {
+            done(err);
+          } else {
+            agent
+              .post('/game/edit')
+              .send({
+                id: game.id,
+                date: '02/02/2017'
+              })
+              .expect(200, done)
+          }
+        });
       });
-    });
     it("should have changed the away game", function(done) {
       Game.findOne({
         gameID: awayTeam.gameID
