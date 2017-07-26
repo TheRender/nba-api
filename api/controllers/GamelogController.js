@@ -152,6 +152,28 @@ module.exports = {
 
   /**
    * @type :: REST
+   * @route :: /gamelogs
+   * @crud :: get
+   * @description :: Retrieves all of the gamelogs
+   * @sample :: `{logs: [log]}`
+   * @sample :: `500`
+   */
+  getAll: function(req, res) {
+    Gamelog.find().exec(function(err, logs) {
+      if (err || logs == undefined) {
+        console.log("There was an error finding the logs.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else {
+        res.send({
+          logs: logs
+        });
+      }
+    });
+  },
+
+  /**
+   * @type :: REST
    * @route :: /gamelog/edit
    * @crud :: post
    * @description :: Edit the given gamelogs's information.  Only edits the data

@@ -134,6 +134,14 @@ describe("Gamelog Controller", function() {
       });
     });
   });
+  describe("getAll", function() {
+    it("should get all of the gamelogs", function(done) {
+      agent
+        .get('/gamelogs')
+        .set('Accept', 'application/json')
+        .expect(200, done);
+    });
+  });
   describe("get", function() {
     it("should get a gamelog", function(done) {
       Gamelog.findOne({

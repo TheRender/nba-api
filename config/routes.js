@@ -182,6 +182,11 @@ module.exports.routes = {
     action: 'get'
   },
 
+  'GET /gamelogs': {
+    controller: 'gamelog',
+    action: 'getAll'
+  },
+
 
   /***************************************************************************
    *                                                                          *
