@@ -162,6 +162,39 @@ describe("Player Controller", function() {
       });
     });
   });
+  describe("searchPlayerNamesAutoComplete", function() {
+    it("should get a player", function(done) {
+      agent
+        .post('/player/playerSearch')
+        .send({
+          searchTerm: 'John'
+        })
+        .end(function(err, res) {
+          if (err) {
+            done(err);
+          }
+          console.log(res.body.results);
+          assert.equal(res.body.results[0], "John Smith");
+          done();
+        });
+    });
+  });
+  describe("findFromName", function() {
+    it("should find from a name", function(done) {
+      agent
+        .post('/player/findFromName')
+        .send({
+          name: "John Smith"
+        })
+        .end(function(err, res) {
+          if (err) {
+            done(err);
+          }
+          assert.equal("67890", res.body.player.playerID);
+          done();
+        });
+    });
+  });
   describe("getAll", function() {
     it("should get all the players", function(done) {
       agent
