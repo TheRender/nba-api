@@ -87,14 +87,14 @@ module.exports.routes = {
     action: 'get'
   },
 
+  'POST /player/playerSearch': {
+    controller: 'player',
+    action: 'searchPlayerNamesAutoComplete'
+  },
+
   'POST /player/new': {
     controller: 'player',
     action: 'new'
-  },
-
-  'GET /player/:playerID': {
-    controller: 'player',
-    action: 'get'
   },
 
   'POST /player/edit': {
@@ -105,6 +105,16 @@ module.exports.routes = {
   'DELETE /player/delete': {
     controller: 'player',
     action: 'delete'
+  },
+
+  'GET /player/:playerID': {
+    controller: 'player',
+    action: 'get'
+  },
+
+  'POST /player/findFromName': {
+    controller: 'player',
+    action: 'findFromName'
   },
 
   'POST /gamelog/new': {
