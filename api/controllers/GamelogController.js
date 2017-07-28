@@ -99,7 +99,8 @@ module.exports = {
 
   existsNBAID: function(req, res) {
     req.validate({
-      logID: 'string'
+      gameID: 'string',
+      playerID: 'string'
     });
     Gamelog.findOne({
       gameID: req.param('gameID'),

@@ -28,7 +28,7 @@ module.exports = {
     async.series([
       function(callback) {
         Team.findOne({
-          teamID: post.homeTeamID
+          id: post.homeTeamID
         }).exec(function(err, teamName) {
           if (err || teamName == undefined) {
             console.log("There was an error finding the home team.");
@@ -42,7 +42,7 @@ module.exports = {
       },
       function(callback) {
         Team.findOne({
-          teamID: post.awayTeamID
+          id: post.awayTeamID
         }).exec(function(err, teamName) {
           if (err || teamName == undefined) {
             console.log('There was an error finding the away team.');
