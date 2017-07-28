@@ -486,6 +486,7 @@ module.exports = {
         video.title = video.name + " Highlights | " + video.points + " Points | vs. " + video.opponentTeamName + " | " + video.date;
         video.description = "Follow us on Twitter: https://twitter.com/TheRenderNBA \n" + video.teamTriCode + " vs. " + video.opponentTriCode + "\n" + video.points + " Points, " + video.rebounds + " Rebounds, " + video.assists + " Assists \n" + "All clips property of the NBA. No copyright infringement is intended, all videos are edited to follow the \"Free Use\" guideline of YouTube.";
         video.tags = "nba, mix, basketball, 2017, new, hd, " + video.name + ", " + video.teamTriCode + ", " + video.team + ", " + video.opponentTeamTriCode + ", " + video.opponentTeam + ", highlights, Cavs, Cavaliers, Bulls, Wizards, Celtics, Nets, Rockets, Pelicans, Timberwolves, heat, Raptors, Pistons, Lakers, Bucks, Mavericks, Sixers, Magic, Suns, Ximo Pierto, NBATV, HD, Live Stream, Streaming, 720p"
+        callback();
       },
     ], function(callback) {
       res.send({
