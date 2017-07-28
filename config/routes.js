@@ -90,7 +90,6 @@ module.exports.routes = {
   'POST /player/playerSearch': {
     controller: 'player',
     action: 'searchPlayerNamesAutoComplete',
-    cors: true
   },
 
   'POST /player/new': {
@@ -116,7 +115,6 @@ module.exports.routes = {
   'POST /player/findFromName': {
     controller: 'player',
     action: 'findFromName',
-    cors: true
   },
 
   'POST /gamelog/new': {
