@@ -397,4 +397,91 @@ module.exports = {
     });
   },
 
+  video: function(req, res) {
+    var post = req.body;
+    var video;
+    var game;
+    async.series([
+      function(callback) {
+        Gamelog.findOne({
+          where: {playerID: post.playerID}
+          sort: 'createdAt'
+        }).exec(function(err) {
+          if (err) {
+            console.log("There was an error finding the player logs.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        var videoObj = {
+          name: post.name,
+          id: post.id,
+          gameID: post.gameID,
+          points: post.points,
+          rebounds: post.rebounds,
+          assists: post.assists,
+        }
+        video.push(videoObj);
+      },
+      function(callback) {
+        Game.findOne({
+          where: {playerID: video.gameID}
+          sort: 'createdAt'
+        }).exec(function(err, gameInfo) {
+          if (err) {
+            console.log("There was an error finding the games.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            game = gameInfo;
+            callback();
+          }
+        })
+      },
+      function(callback) {
+        video.date = game.date;
+        video.teamID = game.homeTeamID;
+        video.teamTriCode = game.homeTeamTriCode;
+        video.opponentTeamID = game.awayTeamID;
+        video.opponentTriCode = game.awayTeamTriCode;
+      },
+      function(callback) {
+        // Get home team name
+        Team.findOne({
+          teamID: video.teamID
+        }).exec(function(err, team) {
+          if (err) {
+            console.log("There was an error finding the home team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            video.teamname = team.name;
+          }
+        });
+      },
+      function(callback) {
+        // Get away team name
+        Team.findOne({
+          teamID: video.opponentTeamID
+        }).exec(function(err, team) {
+          if (err) {
+            console.log("There was an error finding the away team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            video.opponentTeamName = team.name;
+          }
+        });
+      },
+    ], function(callback) {
+      res.send({
+        video: video
+      });
+    })
+  },
+
 };
