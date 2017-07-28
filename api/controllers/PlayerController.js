@@ -397,4 +397,36 @@ module.exports = {
     });
   },
 
+  /**
+   * @type :: REST
+   * @route :: /player/playerSearch
+   * @crud :: post
+   * @description :: Search for a player with the given name
+   * @param :: Post object wih the obj: `{searchTerm: "term"}`
+   * @sample :: `{results: [players]}`
+   * @sample :: `500`
+   */
+  searchPlayerNamesAutoComplete: function(req, res) {
+    var post = req.body;
+    Player.find({
+      name: {
+        contains: post.searchTerm
+      }
+    }).exec(function(err, players) {
+      if (err || players == undefined) {
+        console.log("There was an error finding the players.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else {
+        async.map(players, function(p, cb) {
+          cb(undefined, p.name);
+        }, function(err, results) {
+          res.send({
+            results: results
+          });
+        });
+      }
+    });
+  },
+
 };
