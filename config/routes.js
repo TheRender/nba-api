@@ -112,6 +112,11 @@ module.exports.routes = {
     action: 'get'
   },
 
+  'POST /player/findFromName': {
+    controller: 'player',
+    action: 'findFromName'
+  },
+
   'POST /gamelog/new': {
     controller: 'gamelog',
     action: 'new'

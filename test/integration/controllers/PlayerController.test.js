@@ -179,6 +179,22 @@ describe("Player Controller", function() {
         });
     });
   });
+  describe("findFromName", function() {
+    it("should find from a name", function(done) {
+      agent
+        .post('/player/findFromName')
+        .send({
+          name: "John Smith"
+        })
+        .end(function(err, res) {
+          if (err) {
+            done(err);
+          }
+          assert.equal("67890", res.body.player.playerID);
+          done();
+        });
+    });
+  });
   describe("getAll", function() {
     it("should get all the players", function(done) {
       agent

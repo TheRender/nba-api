@@ -429,4 +429,30 @@ module.exports = {
     });
   },
 
+  /**
+   * @type :: REST
+   * @route :: /player/findFromname
+   * @crud :: post
+   * @description :: Search for a player with the given name
+   * @param :: Post object wih the obj: `{name: "name"}`
+   * @sample :: `{player: player}`
+   * @sample :: `500`
+   */
+  findFromName: function(req, res) {
+    var post = req.body;
+    Player.findOne({
+      name: post.name
+    }).exec(function(err, player) {
+      if (err || player == undefined) {
+        console.log("There was an error finding the player.");
+        console.log("Error = " + err);
+        res.serverError();
+      } else {
+        res.send({
+          player: player
+        });
+      }
+    });
+  },
+
 };
