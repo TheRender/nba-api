@@ -457,7 +457,7 @@ module.exports = {
             callback();
           }
         });
-      }
+      },
       function(callback) {
         Game.findOne({
           where: {
