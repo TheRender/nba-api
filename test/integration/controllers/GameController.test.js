@@ -107,10 +107,10 @@ describe("Game Controller", function() {
         isBuzzerBeater: false,
         isHalfTime: false,
         homeTeamScore: 100,
-        homeTeamID: homeTeam.teamID,
+        homeTeamID: homeTeam.id,
         homeTriCode: 'CHI',
         awayTeamScore: 99,
-        awayTeamID: awayTeam.teamID,
+        awayTeamID: awayTeam.id,
         awayTriCode: 'NYK',
         homePlayers: [],
         awayPlayers: []
