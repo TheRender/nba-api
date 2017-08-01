@@ -409,6 +409,9 @@ module.exports = {
    */
   video: function(req, res) {
     var post = req.body;
+    req.validate({
+      playerID: 'string'
+    });
     var video;
     var game;
     var gamelog;
@@ -416,7 +419,7 @@ module.exports = {
       function(callback) {
         Gamelog.findOne({
           where: {
-            playerID: post.playerID
+            playerID: req.param('playerID')
           },
           sort: 'createdAt',
         }).exec(function(err, log) {
