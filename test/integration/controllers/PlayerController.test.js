@@ -353,8 +353,8 @@ describe("Player Controller", function() {
             .end(function(err, res) {
               if (err) done(err);
               var post = res.body.video;
+              console.log("TESTING VIDEO: " + post);
               assert.equal(post.name, "John Smith");
-              console.log(post);
               done();
             });
         }
