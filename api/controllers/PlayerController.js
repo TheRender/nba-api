@@ -435,7 +435,6 @@ module.exports = {
       },
       function(callback) {
         var videoObj = {
-          name: gamelog.name,
           id: gamelog.id,
           gameID: gamelog.gameID,
           points: gamelog.points,
@@ -444,6 +443,20 @@ module.exports = {
         }
         video = videoObj;
         callback();
+      },
+      function(callback) {
+        Player.findOne({
+          playerID: gamelog.playerID
+        }).exec(function(err, player) {
+          if (err || player == undefined) {
+            console.log("There was an error finding the player.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            video.name = player.name;
+            callback();
+          }
+        });
       },
       function(callback) {
         Game.findOne({
@@ -463,11 +476,11 @@ module.exports = {
         })
       },
       function(callback) {
-        video.date = game.date;
+        video.date = game.date.replace("/", ".");
         video.teamID = game.homeTeamID;
-        video.teamTriCode = game.homeTeamTriCode;
+        video.teamTriCode = game.homeTriCode;
         video.opponentTeamID = game.awayTeamID;
-        video.opponentTriCode = game.awayTeamTriCode;
+        video.opponentTriCode = game.awayTriCode;
         callback();
       },
       function(callback) {
