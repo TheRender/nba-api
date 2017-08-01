@@ -397,6 +397,16 @@ module.exports = {
     });
   },
 
+
+  /**
+   * @type :: REST
+   * @route :: /videos/information/:playerID
+   * @crud :: post
+   * @description :: Return YouTube information with player stats
+   * @param :: Post object with an object with the video information
+   * @sample :: `{video: object}`
+   * @sample :: `500`
+   */
   video: function(req, res) {
     var post = req.body;
     var video;
@@ -492,8 +502,9 @@ module.exports = {
       res.send({
         video: video
       });
-    });
+    })
   },
+
   /**
    * @type :: REST
    * @route :: /player/playerSearch
