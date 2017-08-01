@@ -197,7 +197,7 @@ module.exports.routes = {
     action: 'getAll'
   },
 
-  'POST /videos/information/:playerID': {
+  'GET /videos/information/:playerID': {
     controller: 'player',
     action: 'video'
   },

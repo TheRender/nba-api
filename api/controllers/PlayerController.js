@@ -409,13 +409,18 @@ module.exports = {
    */
   video: function(req, res) {
     var post = req.body;
+    req.validate({
+      playerID: 'string'
+    });
     var video;
     var game;
     var gamelog;
     async.series([
       function(callback) {
         Gamelog.findOne({
-          where: {playerID: post.playerID},
+          where: {
+            playerID: req.param('playerID')
+          },
           sort: 'createdAt',
         }).exec(function(err, log) {
           if (err) {
@@ -441,7 +446,9 @@ module.exports = {
       },
       function(callback) {
         Game.findOne({
-          where: {playerID: video.gameID},
+          where: {
+            playerID: video.gameID
+          },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
           if (err) {
