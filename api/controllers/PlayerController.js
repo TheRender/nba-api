@@ -423,7 +423,7 @@ module.exports = {
           },
           sort: 'createdAt',
         }).exec(function(err, log) {
-          if (err) {
+          if (err || log == undefined) {
             console.log("There was an error finding the player logs.");
             console.log("Error = " + err);
             res.serverError();
