@@ -405,8 +405,8 @@ module.exports = {
     async.series([
       function(callback) {
         Gamelog.findOne({
-          where: {playerID: post.playerID}
-          sort: 'createdAt'
+          where: {playerID: post.playerID},
+          sort: 'createdAt',
         }).exec(function(err, log) {
           if (err) {
             console.log("There was an error finding the player logs.");
@@ -431,8 +431,8 @@ module.exports = {
       },
       function(callback) {
         Game.findOne({
-          where: {playerID: video.gameID}
-          sort: 'createdAt'
+          where: {playerID: video.gameID},
+          sort: 'createdAt',
         }).exec(function(err, gameInfo) {
           if (err) {
             console.log("There was an error finding the games.");
