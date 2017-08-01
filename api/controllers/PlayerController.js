@@ -423,7 +423,7 @@ module.exports = {
           },
           sort: 'createdAt',
         }).exec(function(err, log) {
-          if (err) {
+          if (err || log == undefined) {
             console.log("There was an error finding the player logs.");
             console.log("Error = " + err);
             res.serverError();
@@ -443,11 +443,12 @@ module.exports = {
           assists: gamelog.assists,
         }
         video = videoObj;
+        callback();
       },
       function(callback) {
         Game.findOne({
           where: {
-            playerID: video.gameID
+            gameID: video.gameID
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
