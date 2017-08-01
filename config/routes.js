@@ -197,6 +197,11 @@ module.exports.routes = {
     action: 'getAll'
   },
 
+  'GET /videos/information/:playerID': {
+    controller: 'player',
+    action: 'video'
+  },
+
 
   /***************************************************************************
    *                                                                          *

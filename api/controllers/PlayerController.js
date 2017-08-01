@@ -397,6 +397,103 @@ module.exports = {
     });
   },
 
+  video: function(req, res) {
+    var post = req.body;
+    var video;
+    var game;
+    var gamelog;
+    async.series([
+      function(callback) {
+        Gamelog.findOne({
+          where: {playerID: post.playerID},
+          sort: 'createdAt',
+        }).exec(function(err, log) {
+          if (err) {
+            console.log("There was an error finding the player logs.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            gamelog = log;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        var videoObj = {
+          name: gamelog.name,
+          id: gamelog.id,
+          gameID: gamelog.gameID,
+          points: gamelog.points,
+          rebounds: gamelog.rebounds,
+          assists: gamelog.assists,
+        }
+        video = videoObj;
+      },
+      function(callback) {
+        Game.findOne({
+          where: {playerID: video.gameID},
+          sort: 'createdAt',
+        }).exec(function(err, gameInfo) {
+          if (err) {
+            console.log("There was an error finding the games.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            game = gameInfo;
+            callback();
+          }
+        })
+      },
+      function(callback) {
+        video.date = game.date;
+        video.teamID = game.homeTeamID;
+        video.teamTriCode = game.homeTeamTriCode;
+        video.opponentTeamID = game.awayTeamID;
+        video.opponentTriCode = game.awayTeamTriCode;
+        callback();
+      },
+      function(callback) {
+        // Get home team name
+        Team.findOne({
+          id: video.teamID
+        }).exec(function(err, team) {
+          if (err) {
+            console.log("There was an error finding the home team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            video.teamname = team.name;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        // Get away team name
+        Team.findOne({
+          id: video.opponentTeamID
+        }).exec(function(err, team) {
+          if (err) {
+            console.log("There was an error finding the away team.");
+            console.log("Error = " + err);
+            res.serverError();
+          } else {
+            video.opponentTeamName = team.name;
+            callback();
+          }
+        });
+      },
+      function(callback) {
+        video.title = video.name + " Highlights | " + video.points + " Points | vs. " + video.opponentTeamName + " | " + video.date;
+        video.description = "Follow us on Twitter: https://twitter.com/TheRenderNBA \n" + video.teamTriCode + " vs. " + video.opponentTriCode + "\n" + video.points + " Points, " + video.rebounds + " Rebounds, " + video.assists + " Assists \n" + "All clips property of the NBA. No copyright infringement is intended, all videos are edited to follow the \"Free Use\" guideline of YouTube.";
+        video.tags = "nba, mix, basketball, 2017, new, hd, " + video.name + ", " + video.teamTriCode + ", " + video.team + ", " + video.opponentTeamTriCode + ", " + video.opponentTeam + ", highlights, Cavs, Cavaliers, Bulls, Wizards, Celtics, Nets, Rockets, Pelicans, Timberwolves, heat, Raptors, Pistons, Lakers, Bucks, Mavericks, Sixers, Magic, Suns, Ximo Pierto, NBATV, HD, Live Stream, Streaming, 720p"
+        callback();
+      },
+    ], function(callback) {
+      res.send({
+        video: video
+      });
+    });
+  },
   /**
    * @type :: REST
    * @route :: /player/playerSearch

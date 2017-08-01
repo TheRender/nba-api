@@ -300,4 +300,98 @@ describe("Player Controller", function() {
       });
     });
   });
+  describe("video", function() {
+    it("should create a new gamelog", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          var obj = {
+            date: "10/10/10",
+            playerID: player.id,
+            location: "Chicago",
+            teamID: "12345",
+            gameOpponent: "idk",
+            opponentTeamID: "234123",
+            score: "1-1",
+            minutes: 23,
+            points: 23,
+            rebounds: 23,
+            steals: 23,
+            blocks: 23,
+            fieldGoalsMade: 23,
+            fieldGoalsAttempted: 23,
+            fieldGoalPercentage: 23,
+            threePointsMade: 23,
+            threePointsAttempted: 23,
+            threePointsPercentage: 23,
+            freeThrowsMade: 23,
+            freeThrowsAttempted: 23,
+            freeThrowsPercentage: 23,
+            fouls: 23,
+            plusMinus: 2,
+            gameID: "54321"
+          };
+          agent
+            .post('/gamelog/new')
+            .send(obj)
+            .expect(200, done)
+          done();
+        }
+      });
+    });
+    it("should create a gamelog", function(done) {
+      Gamelog.findOne({
+        gameID: "54321"
+      }).exec(function(err, gamelog) {
+        if (err || gamelog == undefined) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+    });
+    it("should have added the gamelog to the player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, pl) {
+        if (err || pl == undefined) {
+          done(err);
+        } else {
+          Gamelog.findOne({
+            gameID: "54321"
+          }).exec(function(err, gl) {
+            if (err || gl == undefined) {
+              done(err);
+            } else {
+              assert.include(pl.gamelogs, gl.id);
+              done();
+            }
+          });
+        }
+      });
+    });
+    it("should get youtube information", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/videos/information/' + player.id)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body.video;
+              console.log("TESTING VIDEO: " + post);
+              assert.equal(post.name, "John Smith");
+              done();
+            });
+        }
+      });
+    });
+  });
 });
