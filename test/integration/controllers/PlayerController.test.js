@@ -340,5 +340,24 @@ describe("Player Controller", function() {
         }
       });
     });
+    it("should get youtube information", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, player) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          agent
+            .get('/videos/information/' + player.id)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+              if (err) done(err);
+              var post = res.body.video;
+              assert.equal(post.name, "John Smith");
+              done();
+            });
+        }
+      });
+    });
   });
 });
