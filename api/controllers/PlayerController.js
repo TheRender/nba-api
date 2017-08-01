@@ -397,6 +397,16 @@ module.exports = {
     });
   },
 
+
+  /**
+   * @type :: REST
+   * @route :: /videos/information/:playerID
+   * @crud :: post
+   * @description :: Return YouTube information with player stats
+   * @param :: Post object with an object with the video information
+   * @sample :: `{video: object}`
+   * @sample :: `500`
+   */
   video: function(req, res) {
     var post = req.body;
     var video;
@@ -492,64 +502,7 @@ module.exports = {
       res.send({
         video: video
       });
-    });
-  },
-  /**
-   * @type :: REST
-   * @route :: /player/playerSearch
-   * @crud :: post
-   * @description :: Search for a player with the given name
-   * @param :: Post object wih the obj: `{searchTerm: "term"}`
-   * @sample :: `{results: [players]}`
-   * @sample :: `500`
-   */
-  searchPlayerNamesAutoComplete: function(req, res) {
-    var post = req.body;
-    Player.find({
-      name: {
-        contains: post.searchTerm
-      }
-    }).exec(function(err, players) {
-      if (err || players == undefined) {
-        console.log("There was an error finding the players.");
-        console.log("Error = " + err);
-        res.serverError();
-      } else {
-        async.map(players, function(p, cb) {
-          cb(undefined, p.name);
-        }, function(err, results) {
-          res.send({
-            results: results
-          });
-        });
-      }
-    });
-  },
-
-  /**
-   * @type :: REST
-   * @route :: /player/findFromname
-   * @crud :: post
-   * @description :: Search for a player with the given name
-   * @param :: Post object wih the obj: `{name: "name"}`
-   * @sample :: `{player: player}`
-   * @sample :: `500`
-   */
-  findFromName: function(req, res) {
-    var post = req.body;
-    Player.findOne({
-      name: post.name
-    }).exec(function(err, player) {
-      if (err || player == undefined) {
-        console.log("There was an error finding the player.");
-        console.log("Error = " + err);
-        res.serverError();
-      } else {
-        res.send({
-          player: player
-        });
-      }
-    });
+    })
   },
 
 };
