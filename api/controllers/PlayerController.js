@@ -443,11 +443,12 @@ module.exports = {
           assists: gamelog.assists,
         }
         video = videoObj;
+        callback();
       },
       function(callback) {
         Game.findOne({
           where: {
-            playerID: video.gameID
+            gameID: video.gameID
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
