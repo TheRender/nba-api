@@ -271,13 +271,13 @@ describe("Player Controller", function() {
     it("should create a new gamelog", function(done) {
       Player.findOne({
         playerID: "67890"
-      }).exec(function(err, pl) {
+      }).exec(function(err, player) {
         if (err || player == undefined) {
           done(err);
         } else {
           var obj = {
             date: "10/10/10",
-            playerID: pl.id,
+            playerID: player.id,
             location: "Chicago",
             teamID: "12345",
             gameOpponent: "idk",
