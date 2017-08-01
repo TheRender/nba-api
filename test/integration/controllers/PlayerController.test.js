@@ -268,10 +268,22 @@ describe("Player Controller", function() {
     });
   });
   describe("video", function() {
+    var player;
+    it("should get a player", function(done) {
+      Player.findOne({
+        playerID: "67890"
+      }).exec(function(err, pl) {
+        if (err || player == undefined) {
+          done(err);
+        } else {
+          player = pl;
+        }
+      });
+    });
     it("should create a new gamelog", function(done) {
       var obj = {
         date: "10/10/10",
-        playerID: "67890",
+        playerID: player.id,
         location: "Chicago",
         teamID: "12345",
         gameOpponent: "idk",
@@ -330,6 +342,6 @@ describe("Player Controller", function() {
           });
         }
       });
-    });    
+    });
   });
 });
