@@ -354,6 +354,7 @@ describe("Player Controller", function() {
               if (err) done(err);
               var post = res.body.video;
               assert.equal(post.name, "John Smith");
+              console.log(post);
               done();
             });
         }
