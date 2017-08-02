@@ -465,7 +465,7 @@ module.exports = {
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
-          if (err) {
+          if (err || gameInfo == undefined) {
             console.log("There was an error finding the games.");
             console.log("Error = " + err);
             res.serverError();
@@ -488,7 +488,7 @@ module.exports = {
         Team.findOne({
           id: video.teamID
         }).exec(function(err, team) {
-          if (err) {
+          if (err || team == undefined) {
             console.log("There was an error finding the home team.");
             console.log("Error = " + err);
             res.serverError();
@@ -503,7 +503,7 @@ module.exports = {
         Team.findOne({
           id: video.opponentTeamID
         }).exec(function(err, team) {
-          if (err) {
+          if (err || team == undefined) {
             console.log("There was an error finding the away team.");
             console.log("Error = " + err);
             res.serverError();
