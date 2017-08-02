@@ -461,7 +461,7 @@ module.exports = {
       function(callback) {
         Game.findOne({
           where: {
-            id: video.gameID
+            gameID: video.gameID
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
