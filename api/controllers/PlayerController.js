@@ -446,7 +446,7 @@ module.exports = {
       },
       function(callback) {
         Player.findOne({
-          playerID: gamelog.playerID
+          id: gamelog.playerID
         }).exec(function(err, player) {
           if (err || player == undefined) {
             console.log("There was an error finding the player.");
@@ -461,7 +461,7 @@ module.exports = {
       function(callback) {
         Game.findOne({
           where: {
-            gameID: video.id
+            id: video.id
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
