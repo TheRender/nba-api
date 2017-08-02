@@ -476,9 +476,9 @@ module.exports = {
         })
       },
       function(callback) {
-        video.date = game.date.replace("/", ".");
+        video.date = game.date;
         while (video.date.contains("/")) {
-           video.date.replace("/", ".");
+           video.date = video.date.replace("/", ".");
         }
         video.teamID = game.homeTeamID;
         video.teamTriCode = game.homeTriCode;
