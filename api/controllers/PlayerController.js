@@ -477,7 +477,7 @@ module.exports = {
       },
       function(callback) {
         video.date = game.date;
-        while (video.date.contains("/") {
+        while (video.date.contains("/")) {
            video.date.replace("/", ".");
         }
         video.teamID = game.homeTeamID;
