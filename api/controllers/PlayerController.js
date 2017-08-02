@@ -476,7 +476,7 @@ module.exports = {
         })
       },
       function(callback) {
-        video.date = game.date;
+        video.date = game.date.replace("/", ".");
         while (video.date.contains("/")) {
            video.date.replace("/", ".");
         }
