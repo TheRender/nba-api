@@ -453,7 +453,7 @@ module.exports = {
             console.log("Error = " + err);
             res.serverError();
           } else {
-            video.name = player.name;
+            video.playerName = player.name;
             callback();
           }
         });
@@ -461,7 +461,7 @@ module.exports = {
       function(callback) {
         Game.findOne({
           where: {
-            id: video.id
+            gameID: video.gameID
           },
           sort: 'createdAt',
         }).exec(function(err, gameInfo) {
@@ -514,9 +514,9 @@ module.exports = {
         });
       },
       function(callback) {
-        video.title = video.name + " Highlights | " + video.points + " Points | vs. " + video.opponentTeamName + " | " + video.date;
+        video.title = video.playerName + " Highlights | " + video.points + " Points | vs. " + video.opponentTeamName + " | " + video.date;
         video.description = "Follow us on Twitter: https://twitter.com/TheRenderNBA \n" + video.teamTriCode + " vs. " + video.opponentTriCode + "\n" + video.points + " Points, " + video.rebounds + " Rebounds, " + video.assists + " Assists \n" + "All clips property of the NBA. No copyright infringement is intended, all videos are edited to follow the \"Free Use\" guideline of YouTube.";
-        video.tags = "nba, mix, basketball, 2017, new, hd, " + video.name + ", " + video.teamTriCode + ", " + video.team + ", " + video.opponentTeamTriCode + ", " + video.opponentTeam + ", highlights, Cavs, Cavaliers, Bulls, Wizards, Celtics, Nets, Rockets, Pelicans, Timberwolves, heat, Raptors, Pistons, Lakers, Bucks, Mavericks, Sixers, Magic, Suns, Ximo Pierto, NBATV, HD, Live Stream, Streaming, 720p"
+        video.tags = "nba, mix, basketball, 2017, new, hd, " + video.playerName + ", " + video.teamTriCode + ", " + video.team + ", " + video.opponentTeamTriCode + ", " + video.opponentTeam + ", highlights, Cavs, Cavaliers, Bulls, Wizards, Celtics, Nets, Rockets, Pelicans, Timberwolves, heat, Raptors, Pistons, Lakers, Bucks, Mavericks, Sixers, Magic, Suns, Ximo Pierto, NBATV, HD, Live Stream, Streaming, 720p"
         callback();
       },
     ], function(callback) {
