@@ -190,7 +190,7 @@ describe("Player Controller", function() {
           if (err) {
             done(err);
           }
-          assert.equal("67890", res.body.player.playerID);
+          assert.equal("67890", res.body.players[0].playerID);
           done();
         });
     });

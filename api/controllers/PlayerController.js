@@ -478,7 +478,7 @@ module.exports = {
       function(callback) {
         video.date = game.date;
         while (video.date.includes("/")) {
-           video.date = video.date.replace("/", ".");
+          video.date = video.date.replace("/", ".");
         }
         video.teamID = game.homeTeamID;
         video.teamTriCode = game.homeTriCode;
@@ -567,13 +567,15 @@ module.exports = {
    * @crud :: post
    * @description :: Search for a player with the given name
    * @param :: Post object wih the obj: `{name: "name"}`
-   * @sample :: `{player: player}`
+   * @sample :: `{players: players}`
    * @sample :: `500`
    */
   findFromName: function(req, res) {
     var post = req.body;
-    Player.findOne({
-      name: post.name
+    Player.find({
+      name: {
+        'contains': post.name
+      }
     }).exec(function(err, player) {
       if (err || player == undefined) {
         console.log("There was an error finding the player.");
@@ -581,7 +583,7 @@ module.exports = {
         res.serverError();
       } else {
         res.send({
-          player: player
+          players: player
         });
       }
     });
