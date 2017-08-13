@@ -542,7 +542,7 @@ module.exports = {
     var post = req.body;
     Player.find({
       name: {
-        contains: post.searchTerm
+        'contains': post.searchTerm
       }
     }).exec(function(err, players) {
       if (err || players == undefined) {
@@ -572,6 +572,7 @@ module.exports = {
    */
   findFromName: function(req, res) {
     var post = req.body;
+    console.log(post.name);
     Player.find({
       name: {
         'contains': post.name
