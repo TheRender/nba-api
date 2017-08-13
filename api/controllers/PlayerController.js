@@ -582,6 +582,7 @@ module.exports = {
         console.log("Error = " + err);
         res.serverError();
       } else {
+        console.log(player);
         res.send({
           players: player
         });
